@@ -77,6 +77,7 @@ Teď se podíváme, jak implementovat rozhraní **IMainScreen**. Nejdříve vytv
     </AnchorPane>
 Jedná se o nejjednodušší implementaci. Je potřeba nastavit kontroler pomocí *fx:controller* a pro přístup k tomuto nodu *fx:id*
 Konečne implementujeme rozhraní **IMainScreen**.
+
     public class MainController implements Initializable, IMainScreen {
 
         @FXML
