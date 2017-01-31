@@ -86,6 +86,10 @@ public final class Bundle {
         map.put(key, value);
     }
 
+    public void putString(String key, String value) {
+        map.put(key, value);
+    }
+
     public boolean getBoolean(String key) {
         return getBoolean(key, false);
     }
