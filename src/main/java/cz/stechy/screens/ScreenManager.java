@@ -41,6 +41,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 /**
@@ -73,6 +74,8 @@ public final class ScreenManager implements IScreenManager {
     private ScreenManagerConfiguration mConfiguration;
     // Resources
     private ResourceBundle mResources;
+    // Továrna kontrolerů
+    private Callback<Class<?>, Object> factory;
     // Kontroler hlavního screenu
     private IMainScreen mMainScreen;
     private OnDialogShow onDialogShowHandler;
@@ -175,6 +178,7 @@ public final class ScreenManager implements IScreenManager {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(screenInfo.file.toURI().toURL());
         loader.setResources(mResources);
+        loader.setControllerFactory(factory);
         Parent parent = loader.load();
         BaseController controller = loader.getController();
         controller.setScreenManager(this);
@@ -321,20 +325,13 @@ public final class ScreenManager implements IScreenManager {
         onDialogShowHandler = handler;
     }
 
-    public double getWidth() {
-        return mWidth;
-    }
-
-    public void setWidth(double width) {
-        this.mWidth = width;
-    }
-
-    public double getHeight() {
-        return mHeight;
-    }
-
-    public void setHeight(double height) {
-        this.mHeight = height;
+    /**
+     * Nastaví továrnu na kontrolery
+     *
+     * @param factory Továrna na kontrolery
+     */
+    public void setControllerFactory(Callback<Class<?>, Object> factory) {
+        this.factory = factory;
     }
 
     // endregion
