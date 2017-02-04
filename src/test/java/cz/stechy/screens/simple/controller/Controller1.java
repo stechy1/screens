@@ -7,6 +7,12 @@ import javafx.event.ActionEvent;
 
 public class Controller1 extends BaseController {
 
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setTitle("Prvni okno");
+    }
+
     public void goTo2(ActionEvent actionEvent) {
         //startScreen("file2");
         startScreenForResult("file2", 1);

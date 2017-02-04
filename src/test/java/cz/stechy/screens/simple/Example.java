@@ -21,9 +21,9 @@ public class Example extends Application {
             .fxml(Example.class.getClassLoader().getResource("view").getPath())
             .css(Example.class.getClassLoader().getResource("css").getPath())
             .lang(Example.class.getClassLoader().getResource("lang").getPath())
-            .audio(Example.class.getClassLoader().getResource("audio").getPath())
-            .images(Example.class.getClassLoader().getResource("images").getPath())
-            .config(Example.class.getClassLoader().getResource("config").getPath())
+//            .audio(Example.class.getClassLoader().getResource("audio").getPath())
+//            .images(Example.class.getClassLoader().getResource("images").getPath())
+//            .config(Example.class.getClassLoader().getResource("config").getPath())
             .build();
         manager = new ScreenManager(configuration);
         ResourceBundle resources = ResourceBundle.getBundle("lang.translate", Locale.getDefault());

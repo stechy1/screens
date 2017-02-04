@@ -189,6 +189,15 @@ public abstract class BaseController implements IControlledScreen {
     }
 
     /**
+     * Nastaví název okna
+     *
+     * @param title Název okna
+     */
+    protected void setTitle(String title) {
+        mManager.setTitle(title);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
