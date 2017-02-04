@@ -337,6 +337,7 @@ public final class ScreenManager implements IScreenManager {
                 mMainScreen.setChildNode(screenInfo.node);
                 mActiveScreens.push(newScreen);
                 screenInfo.controller.onCreate(bundle);
+                screenInfo.controller.onResume();
                 mScreenTransition.getFirstTimeShowAnimation(container);
                 if (onDialogShowHandler != null) {
                     onDialogShowHandler.onShow();
@@ -353,6 +354,7 @@ public final class ScreenManager implements IScreenManager {
                     mMainScreen.setChildNode(screenInfo.node);
                     mActiveScreens.push(newScreen);
                     screenInfo.controller.onCreate(bundle);
+                    screenInfo.controller.onResume();
                     mScreenTransition.getHideAnimation(container).play();
                     if (onDialogShowHandler != null) {
                         onDialogShowHandler.onShow();
@@ -402,7 +404,7 @@ public final class ScreenManager implements IScreenManager {
             mScreenTransition.getChangingAnimation(container, event -> {
                 activeScreen.screenInfo.controller.onClose();
                 mMainScreen.setChildNode(previousScreen.screenInfo.node);
-                // TODO možná zavolat metodu pro znovunačtení stavu screenu?
+                previousScreen.screenInfo.controller.onResume();
                 mScreenTransition.getHideAnimation(container).play();
             }).play();
 

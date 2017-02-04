@@ -35,11 +35,18 @@ public abstract class BaseController implements IControlledScreen {
     private int mResult = RESULT_FAIL;
 
     /**
-     * Metoda je zavolána, když se přechází na tento screen
+     * Metoda je zavolána, když se poprve zobrazí tento screen
      *
      * @param bundle {@link Bundle} Parametry předané rodičovským screenem
      */
     protected void onCreate(final Bundle bundle) {
+
+    }
+
+    /**
+     * Metoda je zavolána pokažde, když se zobrazí screen
+     */
+    protected void onResume() {
 
     }
 
