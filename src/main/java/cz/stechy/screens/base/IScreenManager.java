@@ -32,7 +32,7 @@ public interface IScreenManager {
      * @param bundle Parametry, které se předají volanému screenu
      */
     default void showScreen(final String name, final Bundle bundle) {
-        showScreenForResult(name, NO_ACTION, new Bundle());
+        showScreenForResult(name, NO_ACTION, bundle);
     }
 
     /**
@@ -51,7 +51,7 @@ public interface IScreenManager {
      * @param bundle Parametry, které se předají volanému screenu
      */
     default void showDialog(final String name, final Bundle bundle) {
-        showDialogForResult(name, NO_ACTION, new Bundle());
+        showDialogForResult(name, NO_ACTION, bundle);
     }
 
     /**
