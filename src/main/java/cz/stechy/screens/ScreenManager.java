@@ -101,6 +101,7 @@ public final class ScreenManager implements IScreenManager {
         this.mConfiguration = parentManager.mConfiguration;
         this.mResources = parentManager.mResources;
         this.mScreenTransition = parentManager.mScreenTransition;
+        this.mFactory = parentManager.mFactory;
         try {
             loadScreens();
         } catch (IOException e) {
