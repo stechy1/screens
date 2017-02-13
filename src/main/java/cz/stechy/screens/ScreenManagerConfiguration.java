@@ -25,31 +25,30 @@ import java.net.URL;
 public final class ScreenManagerConfiguration {
 
     public static final URL DEFAULT_FXML_BASE_FILE = null;
-    public static final String DEFAULT_FXML = "";
-    public static final String DEFAULT_CSS = "";
-    public static final String DEFAULT_IMG = "";
-    public static final String DEFAULT_AUD = "";
-    public static final String DEFAULT_CONFIG = "";
-    public static final String DEFAULT_LANG = "";
+    public static final URL DEFAULT_FXML = null;
+    public static final URL DEFAULT_CSS = null;
+    public static final URL DEFAULT_IMG = null;
+    public static final URL DEFAULT_AUD = null;
+    public static final URL DEFAULT_CONFIG = null;
+    public static final URL DEFAULT_LANG = null;
 
     public final URL baseFxml;
     // Cesta ke složce, kde se nachází FXML soubory
-    public final String fxml;
+    public final URL fxml;
     // Cesta ke složce, kde se nachází CSS soubory
-    public final String css;
+    public final URL css;
     // Cesta ke složce, kde se nachází soubory s obrázky
-    public final String images;
+    public final URL images;
     // Cesta ke složce, kde se nachází soubory s audio obsahem
-    public final String audio;
+    public final URL audio;
     // Cesta ke složce, kde se nachází konfigurační soubory
-    public final String config;
+    public final URL config;
     // Cesta ke složce, kde se nachází soubory s překladem
-    public final String lang;
+    public final URL lang;
 
     /**
      * Vytvoří novou konfiguraci s parametry
-     *
-     * @param baseFxml
+     *  @param baseFxml
      * @param fxml Cesta ke složce, kde se nachází FXML soubory
      * @param css Cesta ke složce, kde se nachází CSS soubory
      * @param images Cesta ke složce, kde se nachází soubory s obrázky
@@ -57,9 +56,7 @@ public final class ScreenManagerConfiguration {
      * @param config Cesta ke složce, kde se nachází konfigurační soubory
      * @param lang Cesta ke složce, kde se nachází soubory s překladem
      */
-    private ScreenManagerConfiguration(URL baseFxml, String fxml, String css, String images,
-        String audio,
-        String config, String lang) {
+    private ScreenManagerConfiguration(URL baseFxml, URL fxml, URL css, URL images, URL audio, URL config, URL lang) {
         this.baseFxml = baseFxml;
         this.fxml = fxml;
         this.css = css;
@@ -72,12 +69,12 @@ public final class ScreenManagerConfiguration {
     public static final class ConfigurationBuilder {
 
         private URL baseFxml = DEFAULT_FXML_BASE_FILE;
-        private String fxml = DEFAULT_FXML;
-        private String css = DEFAULT_CSS;
-        private String images = DEFAULT_IMG;
-        private String audio = DEFAULT_AUD;
-        private String config = DEFAULT_CONFIG;
-        private String lang = DEFAULT_LANG;
+        private URL fxml = DEFAULT_FXML;
+        private URL css = DEFAULT_CSS;
+        private URL images = DEFAULT_IMG;
+        private URL audio = DEFAULT_AUD;
+        private URL config = DEFAULT_CONFIG;
+        private URL lang = DEFAULT_LANG;
 
         /**
          * Nastaví cestu ke všem fxml dokumentům
@@ -96,7 +93,7 @@ public final class ScreenManagerConfiguration {
          * @param fxml Cesta ke kořenovému adresáři, kde se nachází všechny fxml dokumenty
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder fxml(String fxml) {
+        public ConfigurationBuilder fxml(URL fxml) {
             this.fxml = fxml;
             return this;
         }
@@ -107,7 +104,7 @@ public final class ScreenManagerConfiguration {
          * @param css Cesta ke kořenovému adresáři, kde se nachází všechny css styly
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder css(String css) {
+        public ConfigurationBuilder css(URL css) {
             this.css = css;
             return this;
         }
@@ -118,7 +115,7 @@ public final class ScreenManagerConfiguration {
          * @param images Cesta ke kořenovému adresáři, kde se nachází všechny obrázky
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder images(String images) {
+        public ConfigurationBuilder images(URL images) {
             this.images = images;
             return this;
         }
@@ -129,7 +126,7 @@ public final class ScreenManagerConfiguration {
          * @param audio Cesta ke kořenovému adresáři, kde se nachází všechny zvuky
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder audio(String audio) {
+        public ConfigurationBuilder audio(URL audio) {
             this.audio = audio;
             return this;
         }
@@ -140,7 +137,7 @@ public final class ScreenManagerConfiguration {
          * @param config Cesta ke kořenovému adresáři, kde se nachází všechny konfigurační soubory
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder config(String config) {
+        public ConfigurationBuilder config(URL config) {
             this.config = config;
             return this;
         }
@@ -151,7 +148,7 @@ public final class ScreenManagerConfiguration {
          * @param lang Cesta ke kořenovému adresáři, kde se nachází soubory pro překlad
          * @return {@link ConfigurationBuilder}
          */
-        public ConfigurationBuilder lang(String lang) {
+        public ConfigurationBuilder lang(URL lang) {
             this.lang = lang;
             return this;
         }

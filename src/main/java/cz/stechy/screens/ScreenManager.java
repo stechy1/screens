@@ -17,6 +17,7 @@
 package cz.stechy.screens;
 
 import cz.stechy.screens.base.IMainScreen;
+import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
 import cz.stechy.screens.base.IScreenTransition;
 import cz.stechy.screens.transition.OpacityTransition;
@@ -73,6 +74,8 @@ public final class ScreenManager implements IScreenManager {
     private Callback<Class<?>, Object> mFactory;
     // Screen transition
     private IScreenTransition mScreenTransition;
+    // Screen loader
+    private IScreenLoader mScreenLoader;
     // Kontroler hlavního screenu
     private IMainScreen mMainScreen;
     // Handler, který se zavolá po zobrazení dialogu
@@ -102,6 +105,7 @@ public final class ScreenManager implements IScreenManager {
         this.mResources = parentManager.mResources;
         this.mScreenTransition = parentManager.mScreenTransition;
         this.mFactory = parentManager.mFactory;
+        this.mScreenLoader = parentManager.mScreenLoader;
         try {
             loadScreens();
         } catch (IOException e) {
@@ -137,6 +141,12 @@ public final class ScreenManager implements IScreenManager {
         this.mWidth = witdh;
         this.mHeight = heiht;
         this.mScreenTransition = new OpacityTransition();
+        String fxmlPath = screenManagerConfiguration.fxml.toExternalForm();
+        if (fxmlPath.contains("zip") || fxmlPath.contains("jar")) {
+            this.mScreenLoader = new ZipScreenLoader(screenManagerConfiguration.fxml, mBlackList);
+        } else {
+            this.mScreenLoader = new SimpleScreenLoader(screenManagerConfiguration.fxml, mBlackList);
+        }
     }
 
     // endregion
@@ -162,7 +172,7 @@ public final class ScreenManager implements IScreenManager {
                 if (mBlackList.contains(clearName)) {
                     continue;
                 }
-                mScreens.put(clearName, new ScreenInfo(clearName, entry));
+                mScreens.put(clearName, new ScreenInfo(clearName, entry.toURI().toURL()));
             }
         }
     }
@@ -177,7 +187,7 @@ public final class ScreenManager implements IScreenManager {
             return;
         }
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(screenInfo.file.toURI().toURL());
+        loader.setLocation(screenInfo.url);
         loader.setResources(mResources);
         loader.setControllerFactory(mFactory);
         Parent parent = loader.load();
@@ -212,8 +222,9 @@ public final class ScreenManager implements IScreenManager {
      * Načte všechny screeny obsažené ve složce pathToViews
      */
     public void loadScreens() throws IOException {
-        File viewsFolder = new File(mConfiguration.fxml);
-        loadScreens(viewsFolder);
+        mScreens.clear();
+        mScreens.putAll(mScreenLoader.loadScreens());
+
     }
 
     /**
@@ -251,7 +262,7 @@ public final class ScreenManager implements IScreenManager {
      */
     public void showNewDialog(Parent parent, Stage stage) {
         Scene scene = new Scene(parent);
-        scene.getStylesheets().setAll(mConfiguration.css);
+        scene.getStylesheets().setAll(mConfiguration.css.toString());
         stage.setScene(scene);
         stage.setWidth(mWidth);
         stage.setHeight(mHeight);
@@ -438,73 +449,6 @@ public final class ScreenManager implements IScreenManager {
     @Override
     public void setTitle(String title) {
         mTitle.setValue(title);
-    }
-
-    private static class ActiveScreen {
-
-        final int actionId;
-        final ScreenInfo screenInfo;
-        final ActiveScreen parent;
-
-        /**
-         * Vytvoří nový záznam o aktivním screenu, který nemá rodiče
-         *
-         * @param actionId Id akce
-         * @param screenInfo {@link ScreenInfo}
-         */
-        ActiveScreen(final int actionId, final ScreenInfo screenInfo) {
-            this(actionId, screenInfo, null);
-        }
-
-        /**
-         * Vytvoří nový záznam o aktivním screenu, který má rodiče
-         *
-         * @param actionId Id akce
-         * @param screenInfo {@link ScreenInfo}
-         * @param parent Rodič screenu {@link ActiveScreen}
-         */
-        ActiveScreen(final int actionId, final ScreenInfo screenInfo, ActiveScreen parent) {
-            this.actionId = actionId;
-            this.screenInfo = screenInfo;
-            this.parent = parent;
-        }
-    }
-
-    private static class ScreenInfo {
-
-        // Název screenu
-        final String name;
-        // Cesta ke screenu
-        final File file;
-        // Kořenový prvek screenu
-        Node node;
-        // Kontroler screenu
-        BaseController controller;
-        // Příznak, je-li screen načtený
-        private boolean loaded;
-
-        /**
-         * Vytvoří novou přepravku
-         *
-         * @param name Název screenu
-         * @param file Soubor se screenem
-         */
-        ScreenInfo(final String name, File file) {
-            this.name = name;
-            this.file = file;
-            node = null;
-            controller = null;
-            loaded = false;
-        }
-
-        void setLoaded() {
-            this.loaded = true;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
     }
 
     public interface OnDialogShow {

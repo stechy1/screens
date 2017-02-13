@@ -18,9 +18,9 @@ public class Example extends Application {
     private static void initScreenManager() {
         ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.ConfigurationBuilder()
             .baseFxml(Example.class.getClassLoader().getResource("main.fxml"))
-            .fxml(Example.class.getClassLoader().getResource("view").getPath())
-            .css(Example.class.getClassLoader().getResource("css").getPath())
-            .lang(Example.class.getClassLoader().getResource("lang").getPath())
+            .fxml(Example.class.getClassLoader().getResource("view.jar!/view"))
+            .css(Example.class.getClassLoader().getResource("css"))
+            .lang(Example.class.getClassLoader().getResource("lang"))
 //            .audio(Example.class.getClassLoader().getResource("audio").getPath())
 //            .images(Example.class.getClassLoader().getResource("images").getPath())
 //            .config(Example.class.getClassLoader().getResource("config").getPath())
