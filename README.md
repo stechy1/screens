@@ -7,12 +7,12 @@ Jedná se o jednoduchou přepravku obsahující cesty k adresářům důležitý
 
     ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.ConfigurationBuilder()
             .baseFxml(Example.class.getClassLoader().getResource("root.fxml"))
-            .fxml(Example.class.getClassLoader().getResource("view").getPath())
-            .css(Example.class.getClassLoader().getResource("css").getPath())
-            .lang(Example.class.getClassLoader().getResource("lang").getPath())
-            .audio(Example.class.getClassLoader().getResource("audio").getPath())
-            .images(Example.class.getClassLoader().getResource("images").getPath())
-            .config(Example.class.getClassLoader().getResource("config").getPath())
+            .fxml(Example.class.getClassLoader().getResource("view"))
+            .css(Example.class.getClassLoader().getResource("css"))
+            .lang(Example.class.getClassLoader().getResource("lang"))
+            .audio(Example.class.getClassLoader().getResource("audio"))
+            .images(Example.class.getClassLoader().getResource("images"))
+            .config(Example.class.getClassLoader().getResource("config"))
             .build();
         manager = new ScreenManager(configuration);
 
@@ -20,7 +20,7 @@ Jedná se o jednoduchou přepravku obsahující cesty k adresářům důležitý
 - fxml - *[povinný]* Cesta ke kořenové složce, která obsahuje FXMl dokumenty, může obsahovat i podsložky. Jediné, co se musí zachovat, je, že názvy souborů budou univerzální.
 - css - *[nepovinný]* Cesta k souboru s CSS styly.
 - lang - *[nepovinný]* Cesta ke kořenovému adresáři, kde se nachází soubory pro překlad aplikace.
-- audio -  *[nepovinný]*Cesta ke kořenovému adresáři, kde se nachází audio soubory.
+- audio -  *[nepovinný]* Cesta ke kořenovému adresáři, kde se nachází audio soubory.
 - images - *[nepovinný]* Cesta ke kořenovému adresáři, kde se nachází soubory s obrázky.
 - config - *[nepovinný]* Cesta ke kořenovému adresáři, kde se nachází konfigurační soubory.
 
@@ -49,6 +49,7 @@ V metodě *start*, kterou vyžaduje javaFX aplikace využijeme **ScreenManager**
         loader.setResources(manager.getResources());
         Parent parent = loader.load();
         IMainScreen controlledScreen = loader.getController();
+        //manager.setControllerFactory();
         manager.setMainScreen(controlledScreen);
         manager.addScreensToBlacklist("screen4", "screen7");
         manager.loadScreens();
@@ -59,10 +60,18 @@ V metodě *start*, kterou vyžaduje javaFX aplikace využijeme **ScreenManager**
     }
 První dialog (hlavní okno) se musí vytvořit manuálně, ostatní už generuje framework sám.
 Vytvoří se nový FXMLLoader, kterému se nastaví resources (překlad aplikace), pokud nějaké jsou. Načte se kořenový node, ve kterém se budou zobrazovat jednotlivé screeny. Z tohoto node se získá reference na hlavní screen reprezentovaný interfacem **IMainScreen**. Tento screen je zodpovědný za dodání reference na kořenový node. Pokud chceme nějaké soubory vynechat značítacího procesu, tak je přidáme do tzv. blacklistu pomocí metody *addScreensToBlacklist*. Je důležité, aby se tato metoda zavolala dříve, než *loadScreens*, protože pak by neměla tato metoda žádný efekt. Dále se zavolá nad managerem *loadScreens*, který vytvoří interní stukturu screenů. Je důležité vědět, že screeny jako takové se ještě nenačtou. Screeny se načtou až tehdy, kdy bude potřeba.
+
+Metodou *setControllerFactory* se nastaví továrna na kontrolery pro případnou injekci závislostí
+
 Metodou *resize* se nastaví velikost okna.
+
 Metodou *setTitle* se nastaví titulek okna.
+
 Metodou *showNewDialog* se zobrazí hlavní dialog. Je to jediný případ, kdy je tado metoda použita.
-Metodou *showScreen* se zobrazí požadovaný screen. Jako první parametr přijímá název screenu, který odpovídá názvu FXML souboru, který reprezentuje tento screen. Jako druhý parametr je třída **Bundle**, pomocí které se předávají parametry dalším screenům.
+
+Metodou *showScreen* se zobrazí požadovaný screen. Jako první parametr přijímá název screenu, který odpovídá názvu FXML souboru, který reprezentuje tento screen.
+
+Jako druhý parametr je třída **Bundle**, pomocí které se předávají parametry dalším screenům.
 ## Implementace IMainScreen
 Teď se podíváme, jak implementovat rozhraní **IMainScreen**. Nejdříve vytvoříme odpovídající FXML dokument. Nazvěme ho *root.fxml*
 

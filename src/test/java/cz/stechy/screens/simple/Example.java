@@ -41,6 +41,7 @@ public class Example extends Application {
         loader.setResources(manager.getResources());
         Parent parent = loader.load();
         IMainScreen controlledScreen = loader.getController();
+        //manager.setControllerFactory();
         manager.setMainScreen(controlledScreen);
         manager.addScreensToBlacklist("screen4", "screen7");
         manager.loadScreens();
