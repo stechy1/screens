@@ -205,6 +205,13 @@ public abstract class BaseController implements IControlledScreen {
     }
 
     /**
+     * Zavře všechny screeny vyvolané z tohoto dialogu
+     */
+    protected void closeChildScreens() {
+        mManager.closeChildScreens();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

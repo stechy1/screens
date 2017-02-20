@@ -92,4 +92,9 @@ public interface IScreenManager {
      * @param title Název okna
      */
     void setTitle(String title);
+
+    /**
+     * Zavře všechny screeny, které jsou spravovány tímto manažerem
+     */
+    void closeChildScreens();
 }

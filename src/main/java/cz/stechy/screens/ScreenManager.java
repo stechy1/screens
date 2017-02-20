@@ -66,6 +66,8 @@ public final class ScreenManager implements IScreenManager {
     private final Stack<ActiveScreen> mActiveScreens = new Stack<>();
     // Kolekce s názvy screenů, které se nemají načítat
     private final List<String> mBlackList = new ArrayList<>();
+    // Kolekce s okny, které spravuje tento screen manager
+    private final List<IScreenManager> mChildScreenManagers = new ArrayList<>();
     // Konfigurace obsahující cesty k důležitým adresářům
     private ScreenManagerConfiguration mConfiguration;
     // Resources
@@ -387,6 +389,7 @@ public final class ScreenManager implements IScreenManager {
             Parent parent = loader.load();
             IMainScreen mainScreen = loader.getController();
             ScreenManager newManager = new ScreenManager(this, actionId);
+            mChildScreenManagers.add(newManager);
             newManager.setMainScreen(mainScreen);
             newManager.showNewDialog(parent, new Stage());
             newManager.showScreen(name, bundle);
@@ -449,6 +452,16 @@ public final class ScreenManager implements IScreenManager {
     @Override
     public void setTitle(String title) {
         mTitle.setValue(title);
+    }
+
+    @Override
+    public void closeChildScreens() {
+        for (IScreenManager mChildScreenManager : mChildScreenManagers) {
+            mChildScreenManager.closeChildScreens();
+        }
+        mChildScreenManagers.clear();
+
+        finish(new Bundle(), BaseController.RESULT_FAIL);
     }
 
     public interface OnDialogShow {

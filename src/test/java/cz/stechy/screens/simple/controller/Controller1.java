@@ -24,6 +24,7 @@ public class Controller1 extends BaseController {
     }
 
     public void goBack(ActionEvent actionEvent) {
+        closeChildScreens();
         back();
     }
 
