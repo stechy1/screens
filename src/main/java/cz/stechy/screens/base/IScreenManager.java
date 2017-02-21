@@ -17,6 +17,8 @@
 package cz.stechy.screens.base;
 
 import cz.stechy.screens.Bundle;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 
 /**
  * Rozhraní definující metody pro hlavní kontroler screenu
@@ -62,6 +64,55 @@ public interface IScreenManager {
      * @param bundle Parametry, které se předají volanému screenu
      */
     void showDialogForResult(final String name, final int actionId, final Bundle bundle);
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    default void showPopup(final String name, final Bundle bundle, Node parentNode) {
+        showPopupForResult(name, NO_ACTION, bundle, parentNode);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    default void showPopup(final String name, final Bundle bundle, double x, double y) {
+        showPopupForResult(name, NO_ACTION, bundle, x, y);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    default void showPopupForResult(final String name, final int actionId, final Bundle bundle, Node parentNode) {
+        Bounds positionInScreen = parentNode.localToScreen(parentNode.getBoundsInLocal());
+        double width = positionInScreen.getMaxX() - positionInScreen.getMinX();
+        double height = positionInScreen.getMaxY() - positionInScreen.getMinY();
+        showPopupForResult(name, actionId, bundle, positionInScreen.getMinX() + width / 2, positionInScreen.getMinY() + height / 2);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    void showPopupForResult(final String name, final int actionId, final Bundle bundle, double x, double y);
 
     /**
      * Zobrazí předchozí screen.

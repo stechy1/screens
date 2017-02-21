@@ -3,6 +3,7 @@ package cz.stechy.screens.simple.controller;
 import cz.stechy.screens.BaseController;
 import cz.stechy.screens.Bundle;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 
 
 public class Controller2 extends BaseController {
@@ -14,7 +15,8 @@ public class Controller2 extends BaseController {
     }
 
     public void goTo1(ActionEvent actionEvent) {
-        startScreen("file1");
+        //startScreen("file1");
+        startNewPopupWindow("popup", (Node) actionEvent.getSource());
     }
 
     public void goTo3(ActionEvent actionEvent) {

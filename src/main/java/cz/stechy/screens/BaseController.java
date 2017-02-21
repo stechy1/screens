@@ -18,6 +18,7 @@ package cz.stechy.screens;
 
 import cz.stechy.screens.base.IControlledScreen;
 import cz.stechy.screens.base.IScreenManager;
+import javafx.scene.Node;
 
 /**
  * Základní třída každého screenu
@@ -75,7 +76,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      */
     protected void startScreen(final String name) {
-        startScreen(name, null);
+        mManager.showScreen(name, new Bundle());
     }
 
     /**
@@ -95,7 +96,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param actionId Id akce, na kterou se pak bude reagovat
      */
     protected void startScreenForResult(final String name, final int actionId) {
-        startScreenForResult(name, actionId, null);
+        mManager.showScreenForResult(name, actionId, new Bundle());
     }
 
     /**
@@ -116,7 +117,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      */
     protected void startNewDialog(final String name) {
-        startNewDialog(name, new Bundle());
+        mManager.showDialog(name, new Bundle());
     }
 
     /**
@@ -148,6 +149,98 @@ public abstract class BaseController implements IControlledScreen {
      */
     protected void startNewDialogForResult(final String name, final int actionId, final Bundle bundle) {
         mManager.showDialogForResult(name, actionId, bundle);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    protected void startNewPopupWindow(final String name, Node parentNode) {
+        mManager.showPopup(name, new Bundle(), parentNode);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    protected void startNewPopupWindow(final String name, double x, double y) {
+        mManager.showPopup(name, new Bundle(), x, y);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    protected void startNewPopupWindow(final String name, final Bundle bundle, Node parentNode) {
+        mManager.showPopup(name, bundle, parentNode);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    protected void startNewPopupWindow(final String name, final Bundle bundle, double x, double y) {
+        mManager.showPopup(name, bundle, x, y);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    protected void startNewPopupWindowForResult(final String name, final int actionId, final Node parentNode) {
+        mManager.showPopupForResult(name, actionId, new Bundle(), parentNode);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    protected void startNewPopupWindowForResult(final String name, final int actionId, double x, double y) {
+        mManager.showPopupForResult(name, actionId, new Bundle(), x, y);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param parentNode Rodičovský node, ke kterému se dialog "připne"
+     */
+    protected void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, Node parentNode) {
+        mManager.showPopupForResult(name, actionId, bundle, parentNode);
+    }
+
+    /**
+     * Zobrazí popup dialog na pozici získané z rodičovského prvku
+     *
+     * @param name Název screenu
+     * @param actionId  ID akce, na kterou se bude později reagovat
+     * @param bundle Parametry, které se předají popup dialogu
+     * @param x X-ová souřadnice popup dialogu
+     * @param y Y-ová souřadnice popup dialogu
+     */
+    protected void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, double x, double y) {
+        mManager.showPopupForResult(name, actionId, bundle, x, y);
     }
 
     /**

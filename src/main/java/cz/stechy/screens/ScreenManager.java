@@ -38,6 +38,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 /**
@@ -258,8 +259,7 @@ public final class ScreenManager implements IScreenManager {
 
     /**
      * Zobrazí nový dialog
-     *
-     * @param parent Kořenový prvek
+     *  @param parent Kořenový prvek
      * @param stage Okno, ve kterém se má dialog zobrazit
      */
     public void showNewDialog(Parent parent, Stage stage) {
@@ -393,6 +393,36 @@ public final class ScreenManager implements IScreenManager {
             newManager.setMainScreen(mainScreen);
             newManager.showNewDialog(parent, new Stage());
             newManager.showScreen(name, bundle);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showPopupForResult(String name, int actionId, Bundle bundle,
+        double x, double y) {
+        try {
+            FXMLLoader loader = new FXMLLoader(mConfiguration.baseFxml);
+            loader.setResources(mResources);
+            Parent parent = loader.load();
+            IMainScreen mainScreen = loader.getController();
+            ScreenManager newManager = new ScreenManager(this, actionId);
+            mChildScreenManagers.add(newManager);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setX(x);
+            stage.setY(y);
+            stage.setResizable(false);
+            stage.setAlwaysOnTop(true);
+            newManager.setMainScreen(mainScreen);
+            newManager.showNewDialog(parent, stage);
+            parent.setStyle("-fx-background: darkgrey");
+            newManager.showScreen(name, bundle);
+            mMainScreen.getContainer().getScene().getWindow().focusedProperty().addListener((observable, oldValue, hasFocus) -> {
+                if (hasFocus) {
+                    newManager.finish(new Bundle(), -1);
+                }
+            });
         } catch (IOException ex) {
             ex.printStackTrace();
         }
