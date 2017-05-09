@@ -86,6 +86,18 @@ public final class Bundle {
     }
 
     /**
+     * Vloži pole na zadaný klíč
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putArray(String key, Object[] array) {
+        map.put(key, array);
+        return this;
+    }
+
+    /**
      * Vloží {@link Boolean} na pozici klíče
      *
      * @param key Klíč
@@ -94,6 +106,18 @@ public final class Bundle {
      */
     public Bundle putBoolean(String key, boolean value) {
         map.put(key, value);
+        return this;
+    }
+
+    /**
+     * Vloží {@link Boolean[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putBooleanArray(String key, boolean[] array) {
+        map.put(key, array);
         return this;
     }
 
@@ -110,6 +134,18 @@ public final class Bundle {
     }
 
     /**
+     * Vloží {@link Byte[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putByteArray(String key, byte[] array) {
+        map.put(key, array);
+        return this;
+    }
+
+    /**
      * Vloží {@link Character} na pozici klíče
      *
      * @param key Klíč
@@ -118,6 +154,18 @@ public final class Bundle {
      */
     public Bundle putChar(String key, char value) {
         map.put(key, value);
+        return this;
+    }
+
+    /**
+     * Vloží {@link Character[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putCharArray(String key, char[] array) {
+        map.put(key, array);
         return this;
     }
 
@@ -134,6 +182,18 @@ public final class Bundle {
     }
 
     /**
+     * Vloží {@link Short[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putShortArray(String key, short[] array) {
+        map.put(key, array);
+        return this;
+    }
+
+    /**
      * Vloží {@link Integer} na pozici klíče
      *
      * @param key Klíč
@@ -142,6 +202,18 @@ public final class Bundle {
      */
     public Bundle putInt(String key, int value) {
         map.put(key, value);
+        return this;
+    }
+
+    /**
+     * Vloží {@link Integer[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putIntArray(String key, int[] array) {
+        map.put(key, array);
         return this;
     }
 
@@ -158,6 +230,18 @@ public final class Bundle {
     }
 
     /**
+     * Vloží {@link Long[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putLongArray(String key, long[] array) {
+        map.put(key, array);
+        return this;
+    }
+
+    /**
      * Vloží {@link Float} na pozici klíče
      *
      * @param key Klíč
@@ -166,6 +250,18 @@ public final class Bundle {
      */
     public Bundle putFloat(String key, float value) {
         map.put(key, value);
+        return this;
+    }
+
+    /**
+     * Vloží {@link Float[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putFloatArray(String key, float[] array) {
+        map.put(key, array);
         return this;
     }
 
@@ -182,6 +278,18 @@ public final class Bundle {
     }
 
     /**
+     * Vloží {@link Double[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putDoubleArray(String key, double[] array) {
+        map.put(key, array);
+        return this;
+    }
+
+    /**
      * Vloží {@link String} na pozici klíče
      *
      * @param key Klíč
@@ -190,6 +298,18 @@ public final class Bundle {
      */
     public Bundle putString(String key, String value) {
         map.put(key, value);
+        return this;
+    }
+
+    /**
+     * Vloží {@link String[]} na pozici klíče
+     *
+     * @param key Klíč
+     * @param array Pole
+     * @return {@link Bundle}
+     */
+    public Bundle putStringArray(String key, String[] array) {
+        map.put(key, array);
         return this;
     }
 
@@ -218,6 +338,17 @@ public final class Bundle {
     }
 
     /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public boolean[] getBooleanArray(String key) {
+        Object ret = map.get(key);
+        return (boolean[]) ret;
+    }
+
+    /**
      * Vrátí hodnotu spojenou se zadaným klíčem,
      * nebo (byte) 0, pokud neexistuje žádné spojení s klíčem
      *
@@ -239,6 +370,17 @@ public final class Bundle {
     public byte getByte(String key, byte defaultValue) {
         Object ret = map.get(key);
         return ret == null ? defaultValue : (byte) ret;
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public byte[] getByteArray(String key) {
+        Object ret = map.get(key);
+        return (byte[]) ret;
     }
 
     /**
@@ -266,6 +408,17 @@ public final class Bundle {
     }
 
     /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public char[] getCharArray(String key) {
+        Object ret = map.get(key);
+        return (char[]) ret;
+    }
+
+    /**
      * Vrátí hodnotu spojenou se zadaným klíčem,
      * nebo (short) 0, pokud neexistuje žádné spojení s klíčem
      *
@@ -287,6 +440,17 @@ public final class Bundle {
     public short getShort(String key, short defaultValue) {
         Object ret = map.get(key);
         return ret == null ? defaultValue : (short) ret;
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public short[] getShortArray(String key) {
+        Object ret = map.get(key);
+        return (short[]) ret;
     }
 
     /**
@@ -314,6 +478,17 @@ public final class Bundle {
     }
 
     /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public int[] getIntArray(String key) {
+        Object ret = map.get(key);
+        return (int[]) ret;
+    }
+
+    /**
      * Vrátí hodnotu spojenou se zadaným klíčem,
      * nebo (long) 0, pokud neexistuje žádné spojení s klíčem
      *
@@ -335,6 +510,17 @@ public final class Bundle {
     public long getLong(String key, long defaultValue) {
         Object ret = map.get(key);
         return ret == null ? defaultValue : (long) ret;
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public long[] getLongArray(String key) {
+        Object ret = map.get(key);
+        return (long[]) ret;
     }
 
     /**
@@ -362,6 +548,17 @@ public final class Bundle {
     }
 
     /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public float[] getFloatArray(String key) {
+        Object ret = map.get(key);
+        return (float[]) ret;
+    }
+
+    /**
      * Vrátí hodnotu spojenou se zadaným klíčem,
      * nebo (double) 0, pokud neexistuje žádné spojení s klíčem
      *
@@ -386,6 +583,17 @@ public final class Bundle {
     }
 
     /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public double[] getDoubleArray(String key) {
+        Object ret = map.get(key);
+        return (double[]) ret;
+    }
+
+    /**
      * Vrátí hodnotu spojenou se zadaným klíčem,
      * nebo (String) "", pokud neexistuje žádné spojení s klíčem
      *
@@ -407,6 +615,17 @@ public final class Bundle {
     public String getString(String key, String defaultValue) {
         Object ret = map.get(key);
         return ret == null ? defaultValue : (String) ret;
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem
+     *
+     * @param key Klíč
+     * @return Pole hodnot
+     */
+    public String[] getStringArray(String key) {
+        Object ret = map.get(key);
+        return (String[]) ret;
     }
 
 }
