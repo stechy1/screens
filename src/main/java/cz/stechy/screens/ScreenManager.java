@@ -20,6 +20,8 @@ import cz.stechy.screens.base.IMainScreen;
 import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
 import cz.stechy.screens.base.IScreenTransition;
+import cz.stechy.screens.loader.SimpleScreenLoader;
+import cz.stechy.screens.loader.ZipScreenLoader;
 import cz.stechy.screens.transition.OpacityTransition;
 import java.io.File;
 import java.io.IOException;

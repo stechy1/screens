@@ -25,7 +25,7 @@ public class ScreenInfo {
      * @param name Název screenu
      * @param url Soubor se screenem
      */
-    ScreenInfo(final String name, URL url) {
+    public ScreenInfo(final String name, URL url) {
         this.name = name;
         this.url = url;
         node = null;

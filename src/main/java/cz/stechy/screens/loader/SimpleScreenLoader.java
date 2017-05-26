@@ -1,5 +1,6 @@
-package cz.stechy.screens;
+package cz.stechy.screens.loader;
 
+import cz.stechy.screens.ScreenInfo;
 import cz.stechy.screens.base.IScreenLoader;
 import java.io.File;
 import java.io.IOException;
