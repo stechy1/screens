@@ -1,7 +1,6 @@
 package cz.stechy.screens.simple.controller;
 
 import cz.stechy.screens.BaseController;
-import cz.stechy.screens.Bundle;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 
@@ -9,9 +8,9 @@ import javafx.scene.Node;
 public class Controller2 extends BaseController {
 
     @Override
-    protected void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
+    protected void beforeShow() {
         setTitle("Druhy okno");
+        setScreenSize(500, 600);
     }
 
     public void goTo1(ActionEvent actionEvent) {

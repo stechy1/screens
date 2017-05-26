@@ -8,9 +8,9 @@ import javafx.event.ActionEvent;
 public class Controller1 extends BaseController {
 
     @Override
-    protected void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
+    protected void beforeShow() {
         setTitle("Prvni okno");
+        setScreenSize(800, 900);
     }
 
     public void goTo2(ActionEvent actionEvent) {

@@ -348,6 +348,7 @@ public final class ScreenManager implements IScreenManager {
             loadScreen(screenInfo);
             if (mActiveScreens.isEmpty()) { // Zobrazuji první screen v dialogu
                 ActiveScreen newScreen = new ActiveScreen(NO_ACTION, screenInfo);
+                screenInfo.controller.beforeShow();
                 mMainScreen.setChildNode(screenInfo.node);
                 mActiveScreens.push(newScreen);
                 screenInfo.controller.onCreate(bundle);
@@ -365,6 +366,7 @@ public final class ScreenManager implements IScreenManager {
                 mScreenTransition.getChangingAnimation(container, event -> {
                     parentScreen.screenInfo.controller.onClose();
                     ActiveScreen newScreen = new ActiveScreen(actionId, screenInfo, parentScreen);
+                    screenInfo.controller.beforeShow();
                     mMainScreen.setChildNode(screenInfo.node);
                     mActiveScreens.push(newScreen);
                     screenInfo.controller.onCreate(bundle);
@@ -448,6 +450,7 @@ public final class ScreenManager implements IScreenManager {
             assert previousScreen != null;
             mScreenTransition.getChangingAnimation(container, event -> {
                 activeScreen.screenInfo.controller.onClose();
+                previousScreen.screenInfo.controller.beforeShow();
                 mMainScreen.setChildNode(previousScreen.screenInfo.node);
                 previousScreen.screenInfo.controller.onResume();
                 mScreenTransition.getHideAnimation(container).play();

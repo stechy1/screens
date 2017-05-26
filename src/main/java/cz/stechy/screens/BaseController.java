@@ -36,6 +36,14 @@ public abstract class BaseController implements IControlledScreen {
     private int mResult = RESULT_FAIL;
 
     /**
+     * Metoda je zavolána před {@code onCreate}
+     * V této metodě je dobré inicializovat okno, jako nastavit velikost okna a titulek
+     */
+    protected void beforeShow() {
+
+    }
+
+    /**
      * Metoda je zavolána, když se poprve zobrazí tento screen
      *
      * @param bundle {@link Bundle} Parametry předané rodičovským screenem

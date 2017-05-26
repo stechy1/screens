@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 public class PopupController1 extends BaseController {
 
     @Override
-    protected void onResume() {
+    protected void beforeShow() {
         setScreenSize(100, 100);
     }
 
