@@ -67,10 +67,12 @@ public final class Bundle {
 
     /**
      * @param key Klíč objektu
-     * @return Objekt podle klíče
+     * @param <T> Datový typ, který se má vrátit
+     * @return Hodnotu
      */
-    public Object get(String key) {
-        return map.get(key);
+    @SuppressWarnings("unchecked")
+    public <T> T get(String key) {
+        return (T) map.get(key);
     }
 
     /**
