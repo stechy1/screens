@@ -17,6 +17,7 @@
 package cz.stechy.screens.base;
 
 import cz.stechy.screens.Bundle;
+import javafx.util.Duration;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
@@ -148,4 +149,11 @@ public interface IScreenManager {
      * Zavře všechny screeny, které jsou spravovány tímto manažerem
      */
     void closeChildScreens();
+
+    /**
+     * Zobrazí v aktuálním screenu notifikaci
+     *  @param text Text notifikace
+     * @param duration
+     */
+    void showNotification(String text, Duration duration);
 }

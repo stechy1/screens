@@ -2,6 +2,7 @@ package cz.stechy.screens.simple.controller;
 
 import cz.stechy.screens.BaseController;
 import cz.stechy.screens.Bundle;
+import cz.stechy.screens.Notification.Length;
 import javafx.event.ActionEvent;
 
 
@@ -10,7 +11,7 @@ public class Controller1 extends BaseController {
     @Override
     protected void beforeShow() {
         setTitle("Prvni okno");
-        setScreenSize(800, 900);
+        setScreenSize(500, 400);
     }
 
     public void goTo2(ActionEvent actionEvent) {
@@ -41,5 +42,11 @@ public class Controller1 extends BaseController {
     public void handleFinish(ActionEvent actionEvent) {
         setResult(RESULT_SUCCESS);
         finish();
+    }
+
+    static int id = 0;
+
+    public void handleNotify(ActionEvent actionEvent) {
+        showNotification("Testovací notifikace: " + id++, Length.LONG);
     }
 }

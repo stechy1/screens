@@ -66,7 +66,7 @@ public final class ScreenManagerConfiguration {
         this.lang = lang;
     }
 
-    public static final class ConfigurationBuilder {
+    public static final class Builder {
 
         private URL baseFxml = DEFAULT_FXML_BASE_FILE;
         private URL fxml = DEFAULT_FXML;
@@ -80,9 +80,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu ke všem fxml dokumentům
          *
          * @param baseFxml Cesta k základnímu fxml souboru
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder baseFxml(URL baseFxml) {
+        public Builder baseFxml(URL baseFxml) {
             this.baseFxml = baseFxml;
             return this;
         }
@@ -91,9 +91,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu ke všem fxml dokumentům
          *
          * @param fxml Cesta ke kořenovému adresáři, kde se nachází všechny fxml dokumenty
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder fxml(URL fxml) {
+        public Builder fxml(URL fxml) {
             this.fxml = fxml;
             return this;
         }
@@ -102,9 +102,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu k css stylům
          *
          * @param css Cesta ke kořenovému adresáři, kde se nachází všechny css styly
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder css(URL css) {
+        public Builder css(URL css) {
             this.css = css;
             return this;
         }
@@ -113,9 +113,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu k obrázkům aplikace
          *
          * @param images Cesta ke kořenovému adresáři, kde se nachází všechny obrázky
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder images(URL images) {
+        public Builder images(URL images) {
             this.images = images;
             return this;
         }
@@ -124,9 +124,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu ke zvukům aplikace
          *
          * @param audio Cesta ke kořenovému adresáři, kde se nachází všechny zvuky
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder audio(URL audio) {
+        public Builder audio(URL audio) {
             this.audio = audio;
             return this;
         }
@@ -135,9 +135,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu ke konfiguračním souborům
          *
          * @param config Cesta ke kořenovému adresáři, kde se nachází všechny konfigurační soubory
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder config(URL config) {
+        public Builder config(URL config) {
             this.config = config;
             return this;
         }
@@ -146,9 +146,9 @@ public final class ScreenManagerConfiguration {
          * Nastaví cestu k souborům pro překlad
          *
          * @param lang Cesta ke kořenovému adresáři, kde se nachází soubory pro překlad
-         * @return {@link ConfigurationBuilder}
+         * @return {@link Builder}
          */
-        public ConfigurationBuilder lang(URL lang) {
+        public Builder lang(URL lang) {
             this.lang = lang;
             return this;
         }

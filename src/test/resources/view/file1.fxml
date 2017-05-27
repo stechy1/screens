@@ -2,13 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
-<Pane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-  xmlns="http://javafx.com/javafx/8.0.112"
-  fx:controller="cz.stechy.screens.simple.controller.Controller1">
-  <Button layoutX="269.0" layoutY="187.0" mnemonicParsing="false" onAction="#goTo2"
-    styleClass="custom-button" text="Go to 2"/>
-  <Button layoutX="269.0" layoutY="220.0" mnemonicParsing="false" onAction="#goTo3" text="Go to 3"/>
-  <Button layoutX="269.0" layoutY="255.0" mnemonicParsing="false" onAction="#goBack" text="Back"/>
-  <Button layoutX="269.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleFinish" text="Finish"/>
+
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.stechy.screens.simple.controller.Controller1">
+  <Button layoutX="269.0" layoutY="187.0" mnemonicParsing="false" onAction="#goTo2" styleClass="custom-button" text="Go to 2" />
+  <Button layoutX="269.0" layoutY="220.0" mnemonicParsing="false" onAction="#goTo3" text="Go to 3" />
+  <Button layoutX="269.0" layoutY="255.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+  <Button layoutX="269.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleFinish" text="Finish" />
+   <Button layoutX="346.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleNotify" text="Show test notification" />
 
 </Pane>

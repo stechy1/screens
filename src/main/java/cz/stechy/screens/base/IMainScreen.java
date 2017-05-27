@@ -34,4 +34,16 @@ public interface IMainScreen {
      * @return Vrátí {@link Node} který představuje kořenový prvek scény
      */
     Node getContainer();
+
+    /**
+     * Zobrazí notifikaci s textem
+     *
+     * @param text Text, který se zobrazí v notifikaci
+     */
+    void showNotification(String text);
+
+    /**
+     * Odstraní notifikaci
+     */
+    void hideNotification();
 }

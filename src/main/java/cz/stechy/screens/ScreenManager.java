@@ -25,14 +25,20 @@ import cz.stechy.screens.loader.ZipScreenLoader;
 import cz.stechy.screens.transition.OpacityTransition;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +48,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 /**
  * Hlavní správce screenů
@@ -71,6 +78,11 @@ public final class ScreenManager implements IScreenManager {
     private final List<String> mBlackList = new ArrayList<>();
     // Kolekce s okny, které spravuje tento screen manager
     private final List<IScreenManager> mChildScreenManagers = new ArrayList<>();
+    // Kolekce s notifikacemi, které se zobrazují na screenu
+    private final Queue<Notification> notifications = new ArrayDeque<>();
+    private final BooleanProperty notifiing = new SimpleBooleanProperty();
+    // Titulek okna
+    private final StringProperty mTitle = new SimpleStringProperty();
     // Konfigurace obsahující cesty k důležitým adresářům
     private ScreenManagerConfiguration mConfiguration;
     // Resources
@@ -89,8 +101,6 @@ public final class ScreenManager implements IScreenManager {
     private double mWidth;
     // Výška okna
     private double mHeight;
-    // Titulek okna
-    private StringProperty mTitle = new SimpleStringProperty();
 
     // endregion
 
@@ -217,6 +227,29 @@ public final class ScreenManager implements IScreenManager {
      */
     private void close(ActiveScreen screen) {
         ((Stage) screen.screenInfo.node.getScene().getWindow()).close();
+    }
+
+    /**
+     * Zobrazí notifikaci z fronty pouze, pokud není žádná notifikace zobrazena
+     */
+    private synchronized void nextNotification() {
+        if (notifiing.get() || notifications.isEmpty()) {
+            return;
+        }
+
+        final Notification notification = notifications.poll();
+        final Timeline timeline = new Timeline(new KeyFrame(
+            notification.duration, event -> {
+                mMainScreen.hideNotification();
+                notifiing.set(false);
+                nextNotification();
+            }
+        ));
+
+        mMainScreen.showNotification(notification.text);
+        notifiing.set(true);
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     // endregion
@@ -497,6 +530,12 @@ public final class ScreenManager implements IScreenManager {
         mChildScreenManagers.clear();
 
         finish(new Bundle(), BaseController.RESULT_FAIL);
+    }
+
+    @Override
+    public void showNotification(String text, Duration duration) {
+        notifications.add(new Notification(text, duration));
+        nextNotification();
     }
 
     public interface OnDialogShow {

@@ -16,10 +16,10 @@ public class Example extends Application {
     private static ScreenManager manager;
 
     private static void initScreenManager() {
-        ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.ConfigurationBuilder()
+        ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.Builder()
             .baseFxml(Example.class.getClassLoader().getResource("main.fxml"))
             .fxml(Example.class.getClassLoader().getResource("view"))
-            .css(Example.class.getClassLoader().getResource("css"))
+            .css(Example.class.getClassLoader().getResource("css/style.css"))
             .lang(Example.class.getClassLoader().getResource("lang"))
 //            .audio(Example.class.getClassLoader().getResource("audio").getPath())
 //            .images(Example.class.getClassLoader().getResource("images").getPath())
