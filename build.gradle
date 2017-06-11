@@ -1,5 +1,5 @@
 group 'cz.zcu.fav'
-version 'v1.5'
+version 'v1.5.1'
 
 apply plugin: 'java'
 
