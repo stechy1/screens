@@ -8,6 +8,7 @@ import javafx.scene.Node;
 /**
  * Rozhraní pro metody na animaci mezi screeny
  */
+@Deprecated
 public interface IScreenTransition {
 
     /**

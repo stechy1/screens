@@ -16,13 +16,14 @@
 
 package cz.stechy.screens;
 
+import cz.stechy.screens.animation.FadeAnimator;
+import cz.stechy.screens.animation.IScreenAnimator;
 import cz.stechy.screens.base.IMainScreen;
 import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
 import cz.stechy.screens.base.IScreenTransition;
 import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
-import cz.stechy.screens.transition.OpacityTransition;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -37,6 +38,7 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -90,7 +92,7 @@ public final class ScreenManager implements IScreenManager {
     // Továrna kontrolerů
     private Callback<Class<?>, Object> mFactory;
     // Screen transition
-    private IScreenTransition mScreenTransition;
+    private IScreenAnimator mAnimator;
     // Screen loader
     private IScreenLoader mScreenLoader;
     // Kontroler hlavního screenu
@@ -118,7 +120,7 @@ public final class ScreenManager implements IScreenManager {
         this.mBlackList.addAll(parentManager.mBlackList);
         this.mConfiguration = parentManager.mConfiguration;
         this.mResources = parentManager.mResources;
-        this.mScreenTransition = parentManager.mScreenTransition;
+        this.mAnimator = parentManager.mAnimator;
         this.mFactory = parentManager.mFactory;
         this.mScreenLoader = parentManager.mScreenLoader;
         try {
@@ -155,7 +157,7 @@ public final class ScreenManager implements IScreenManager {
         this.mActionId = NO_ACTION;
         this.mWidth = witdh;
         this.mHeight = heiht;
-        this.mScreenTransition = new OpacityTransition();
+        this.mAnimator = new FadeAnimator();
         String fxmlPath = screenManagerConfiguration.fxml.toExternalForm();
         if (fxmlPath.contains("zip") || fxmlPath.contains("jar")) {
             this.mScreenLoader = new ZipScreenLoader(screenManagerConfiguration.fxml, mBlackList);
@@ -364,17 +366,16 @@ public final class ScreenManager implements IScreenManager {
     /**
      * Nastaví animaci pro přechod mezi screeny
      *
-     * @param mScreenTransition {@link IScreenTransition}
+     * @param mAnimator {@link IScreenTransition}
      */
-    public void setmScreenTransition(IScreenTransition mScreenTransition) {
-        this.mScreenTransition = mScreenTransition;
+    public void setmAnimator(IScreenAnimator mAnimator) {
+        this.mAnimator = mAnimator;
     }
 
     // endregion
 
     @Override
-    public void showScreenForResult(String name, int actionId,
-        Bundle bundle) {
+    public void showScreenForResult(String name, int actionId, Bundle bundle) {
         final ScreenInfo screenInfo = mScreens.get(name);
         final Node container = mMainScreen.getContainer();
         //final DoubleProperty opacity = mMainScreen.getContainer().opacityProperty();
@@ -388,29 +389,41 @@ public final class ScreenManager implements IScreenManager {
                 mActiveScreens.push(newScreen);
                 screenInfo.controller.onCreate(bundle);
                 screenInfo.controller.onResume();
-                mScreenTransition.getFirstTimeShowAnimation(container);
-                if (onDialogShowHandler != null) {
-                    onDialogShowHandler.onShow();
-                }
+                final Transition animationIn = mAnimator.getShowAnimation(container);
+                animationIn.setOnFinished(event -> {
+                    if (onDialogShowHandler != null) {
+                        onDialogShowHandler.onShow();
+                    }
+                });
+                animationIn.play();
+
             } else { // Zobrazuji n-tý screen v dialogu
                 final ActiveScreen parentScreen = mActiveScreens.peek();
                 // Pokud chci zobrazit znovu stejný screen, tak to nedovolím
                 if (Objects.equals(name, parentScreen.screenInfo.name)) {
                     return;
                 }
-                mScreenTransition.getChangingAnimation(container, event -> {
-                    parentScreen.screenInfo.controller.onClose();
-                    ActiveScreen newScreen = new ActiveScreen(actionId, screenInfo, parentScreen);
-                    screenInfo.controller.beforeShow();
+
+                // Před měnící se animací
+                parentScreen.screenInfo.controller.onClose();
+                ActiveScreen newScreen = new ActiveScreen(actionId, screenInfo, parentScreen);
+                screenInfo.controller.beforeShow();
+                // Inicializace animace
+                final Transition animationOut = mAnimator.getHideAnimation(container);
+                animationOut.setOnFinished(event -> {
                     mMainScreen.setChildNode(screenInfo.node);
                     mActiveScreens.push(newScreen);
                     screenInfo.controller.onCreate(bundle);
                     screenInfo.controller.onResume();
-                    mScreenTransition.getHideAnimation(container).play();
-                    if (onDialogShowHandler != null) {
-                        onDialogShowHandler.onShow();
-                    }
-                }).play();
+                    final Transition animationIn = mAnimator.getShowAnimation(container);
+                    animationIn.setOnFinished(event1 -> {
+                        if (onDialogShowHandler != null) {
+                            onDialogShowHandler.onShow();
+                        }
+                    });
+                    animationIn.play();
+                });
+                animationOut.play();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -418,8 +431,7 @@ public final class ScreenManager implements IScreenManager {
     }
 
     @Override
-    public void showDialogForResult(String name, int actionId,
-        Bundle bundle) {
+    public void showDialogForResult(String name, int actionId, Bundle bundle) {
         try {
             FXMLLoader loader = new FXMLLoader(mConfiguration.baseFxml);
             loader.setResources(mResources);
@@ -436,8 +448,7 @@ public final class ScreenManager implements IScreenManager {
     }
 
     @Override
-    public void showPopupForResult(String name, int actionId, Bundle bundle,
-        double x, double y) {
+    public void showPopupForResult(String name, int actionId, Bundle bundle, double x, double y) {
         try {
             FXMLLoader loader = new FXMLLoader(mConfiguration.baseFxml);
             loader.setResources(mResources);
@@ -471,26 +482,25 @@ public final class ScreenManager implements IScreenManager {
         final ActiveScreen activeScreen = mActiveScreens.peek();
         if (activeScreen.parent == null) { // Pokud aktuální screen nemá rodiče
             if (isDialog()) { // Pokud se jedná o správce okna v dialogu
-                // TODO Zavřít dialog a možná informovat rodičovský screenManažer, že dialog skončil
                 activeScreen.screenInfo.controller.onClose();
                 close(activeScreen);
             }
         } else { // Pokud aktuální screen má rodiče
             mActiveScreens.pop(); // Můžu popnout pouze tehdy, pokud má nějakého rodiče
-            //final DoubleProperty opacity = mMainScreen.getContainer().opacityProperty();
             final Node container = mMainScreen.getContainer();
             // TODO přepnout screeny v okně
             final ActiveScreen previousScreen = mActiveScreens.peek();
             // Vím, že rodič existuje, protože prošel horní podmínkou
             assert previousScreen != null;
-            mScreenTransition.getChangingAnimation(container, event -> {
+            final Transition animationOut = mAnimator.getHideAnimation(container);
+            animationOut.setOnFinished(event -> {
                 activeScreen.screenInfo.controller.onClose();
                 previousScreen.screenInfo.controller.beforeShow();
                 mMainScreen.setChildNode(previousScreen.screenInfo.node);
                 previousScreen.screenInfo.controller.onResume();
-                mScreenTransition.getHideAnimation(container).play();
-            }).play();
-
+                mAnimator.getShowAnimation(container).play();
+            });
+            animationOut.play();
         }
     }
 
