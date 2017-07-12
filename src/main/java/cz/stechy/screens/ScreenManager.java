@@ -21,7 +21,6 @@ import cz.stechy.screens.animation.IScreenAnimator;
 import cz.stechy.screens.base.IMainScreen;
 import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
-import cz.stechy.screens.base.IScreenTransition;
 import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
 import java.io.File;
@@ -367,7 +366,7 @@ public final class ScreenManager implements IScreenManager {
     /**
      * Nastaví animaci pro přechod mezi screeny
      *
-     * @param mAnimator {@link IScreenTransition}
+     * @param mAnimator {@link IScreenAnimator}
      */
     public void setmAnimator(IScreenAnimator mAnimator) {
         this.mAnimator = mAnimator;
