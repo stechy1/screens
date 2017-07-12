@@ -83,7 +83,7 @@ public abstract class BaseController implements IControlledScreen {
      *
      * @param name Název FXML souboru definující screen
      */
-    protected void startScreen(final String name) {
+    public void startScreen(final String name) {
         mManager.showScreen(name, new Bundle());
     }
 
@@ -93,7 +93,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      * @param bundle {@link Bundle} Parametry, které se předají dalšímu screenu
      */
-    protected void startScreen(final String name, final Bundle bundle) {
+    public void startScreen(final String name, final Bundle bundle) {
         mManager.showScreen(name, bundle);
     }
 
@@ -103,7 +103,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      * @param actionId Id akce, na kterou se pak bude reagovat
      */
-    protected void startScreenForResult(final String name, final int actionId) {
+    public void startScreenForResult(final String name, final int actionId) {
         mManager.showScreenForResult(name, actionId, new Bundle());
     }
 
@@ -114,7 +114,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param actionId Id akce, na kterou se pak bude reagovat
      * @param bundle {@link Bundle} Parametry, které se předají dalšímu screenu
      */
-    protected void startScreenForResult(final String name, final int actionId,
+    public void startScreenForResult(final String name, final int actionId,
         final Bundle bundle) {
         mManager.showScreenForResult(name, actionId, bundle);
     }
@@ -124,7 +124,7 @@ public abstract class BaseController implements IControlledScreen {
      *
      * @param name Název FXML souboru definující screen
      */
-    protected void startNewDialog(final String name) {
+    public void startNewDialog(final String name) {
         mManager.showDialog(name, new Bundle());
     }
 
@@ -134,7 +134,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      * @param bundle {@link Bundle} Parametry, které se předají dalšímu screenu
      */
-    protected void startNewDialog(final String name, final Bundle bundle) {
+    public void startNewDialog(final String name, final Bundle bundle) {
         mManager.showDialog(name, bundle);
     }
 
@@ -144,7 +144,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název FXML souboru definující screen
      * @param actionId Id akce, na kterou se pak bude reagovat
      */
-    protected void startNewDialogForResult(final String name, final int actionId) {
+    public void startNewDialogForResult(final String name, final int actionId) {
         startNewDialogForResult(name, actionId, new Bundle());
     }
 
@@ -155,7 +155,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param actionId Id akce, na kterou se pak bude reagovat
      * @param bundle {@link Bundle} Parametry, které se předají dalšímu screenu
      */
-    protected void startNewDialogForResult(final String name, final int actionId, final Bundle bundle) {
+    public void startNewDialogForResult(final String name, final int actionId, final Bundle bundle) {
         mManager.showDialogForResult(name, actionId, bundle);
     }
 
@@ -165,7 +165,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param name Název screenu
      * @param parentNode Rodičovský node, ke kterému se dialog "připne"
      */
-    protected void startNewPopupWindow(final String name, Node parentNode) {
+    public void startNewPopupWindow(final String name, Node parentNode) {
         mManager.showPopup(name, new Bundle(), parentNode);
     }
 
@@ -176,7 +176,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param x X-ová souřadnice popup dialogu
      * @param y Y-ová souřadnice popup dialogu
      */
-    protected void startNewPopupWindow(final String name, double x, double y) {
+    public void startNewPopupWindow(final String name, double x, double y) {
         mManager.showPopup(name, new Bundle(), x, y);
     }
 
@@ -187,7 +187,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param bundle Parametry, které se předají popup dialogu
      * @param parentNode Rodičovský node, ke kterému se dialog "připne"
      */
-    protected void startNewPopupWindow(final String name, final Bundle bundle, Node parentNode) {
+    public void startNewPopupWindow(final String name, final Bundle bundle, Node parentNode) {
         mManager.showPopup(name, bundle, parentNode);
     }
 
@@ -199,7 +199,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param x X-ová souřadnice popup dialogu
      * @param y Y-ová souřadnice popup dialogu
      */
-    protected void startNewPopupWindow(final String name, final Bundle bundle, double x, double y) {
+    public void startNewPopupWindow(final String name, final Bundle bundle, double x, double y) {
         mManager.showPopup(name, bundle, x, y);
     }
 
@@ -210,7 +210,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param actionId  ID akce, na kterou se bude později reagovat
      * @param parentNode Rodičovský node, ke kterému se dialog "připne"
      */
-    protected void startNewPopupWindowForResult(final String name, final int actionId, final Node parentNode) {
+    public void startNewPopupWindowForResult(final String name, final int actionId, final Node parentNode) {
         mManager.showPopupForResult(name, actionId, new Bundle(), parentNode);
     }
 
@@ -222,7 +222,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param x X-ová souřadnice popup dialogu
      * @param y Y-ová souřadnice popup dialogu
      */
-    protected void startNewPopupWindowForResult(final String name, final int actionId, double x, double y) {
+    public void startNewPopupWindowForResult(final String name, final int actionId, double x, double y) {
         mManager.showPopupForResult(name, actionId, new Bundle(), x, y);
     }
 
@@ -234,7 +234,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param bundle Parametry, které se předají popup dialogu
      * @param parentNode Rodičovský node, ke kterému se dialog "připne"
      */
-    protected void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, Node parentNode) {
+    public void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, Node parentNode) {
         mManager.showPopupForResult(name, actionId, bundle, parentNode);
     }
 
@@ -247,7 +247,7 @@ public abstract class BaseController implements IControlledScreen {
      * @param x X-ová souřadnice popup dialogu
      * @param y Y-ová souřadnice popup dialogu
      */
-    protected void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, double x, double y) {
+    public void startNewPopupWindowForResult(final String name, final int actionId, final Bundle bundle, double x, double y) {
         mManager.showPopupForResult(name, actionId, bundle, x, y);
     }
 
