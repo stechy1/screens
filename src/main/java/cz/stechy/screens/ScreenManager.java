@@ -305,7 +305,6 @@ public final class ScreenManager implements IScreenManager {
         stage.setWidth(mWidth);
         stage.setHeight(mHeight);
         stage.titleProperty().bind(mTitle);
-        stage.centerOnScreen();
         stage.show();
     }
 
