@@ -17,6 +17,8 @@
 package cz.stechy.screens;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Přepravka obsahující cesty k důleitým adresářům
@@ -26,7 +28,6 @@ public final class ScreenManagerConfiguration {
 
     public static final URL DEFAULT_FXML_BASE_FILE = null;
     public static final URL DEFAULT_FXML = null;
-    public static final URL DEFAULT_CSS = null;
     public static final URL DEFAULT_IMG = null;
     public static final URL DEFAULT_AUD = null;
     public static final URL DEFAULT_CONFIG = null;
@@ -36,7 +37,7 @@ public final class ScreenManagerConfiguration {
     // Cesta ke složce, kde se nachází FXML soubory
     public final URL fxml;
     // Cesta ke složce, kde se nachází CSS soubory
-    public final URL css;
+    public final List<String> css;
     // Cesta ke složce, kde se nachází soubory s obrázky
     public final URL images;
     // Cesta ke složce, kde se nachází soubory s audio obsahem
@@ -50,13 +51,13 @@ public final class ScreenManagerConfiguration {
      * Vytvoří novou konfiguraci s parametry
      *  @param baseFxml
      * @param fxml Cesta ke složce, kde se nachází FXML soubory
-     * @param css Cesta ke složce, kde se nachází CSS soubory
+     * @param css Kolekce souborů se styly
      * @param images Cesta ke složce, kde se nachází soubory s obrázky
      * @param audio Cesta ke složce, kde se nachází soubory s audio obsahem
      * @param config Cesta ke složce, kde se nachází konfigurační soubory
      * @param lang Cesta ke složce, kde se nachází soubory s překladem
      */
-    private ScreenManagerConfiguration(URL baseFxml, URL fxml, URL css, URL images, URL audio, URL config, URL lang) {
+    private ScreenManagerConfiguration(URL baseFxml, URL fxml, List<String> css, URL images, URL audio, URL config, URL lang) {
         this.baseFxml = baseFxml;
         this.fxml = fxml;
         this.css = css;
@@ -70,7 +71,7 @@ public final class ScreenManagerConfiguration {
 
         private URL baseFxml = DEFAULT_FXML_BASE_FILE;
         private URL fxml = DEFAULT_FXML;
-        private URL css = DEFAULT_CSS;
+        private List<String> css = new ArrayList<>();
         private URL images = DEFAULT_IMG;
         private URL audio = DEFAULT_AUD;
         private URL config = DEFAULT_CONFIG;
@@ -105,7 +106,7 @@ public final class ScreenManagerConfiguration {
          * @return {@link Builder}
          */
         public Builder css(URL css) {
-            this.css = css;
+            this.css.add(css.toString());
             return this;
         }
 

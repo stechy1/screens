@@ -300,7 +300,7 @@ public final class ScreenManager implements IScreenManager {
      */
     public void showNewDialog(Parent parent, Stage stage) {
         Scene scene = new Scene(parent);
-        scene.getStylesheets().setAll(mConfiguration.css.toString());
+        scene.getStylesheets().setAll(mConfiguration.css);
         stage.setScene(scene);
         stage.setWidth(mWidth);
         stage.setHeight(mHeight);
