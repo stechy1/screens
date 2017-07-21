@@ -340,14 +340,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (boolean[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public boolean[] getBooleanArray(String key) {
+        return getBooleanArray(key, new boolean[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
         Object ret = map.get(key);
-        return (boolean[]) ret;
+        return ret == null ? defaultValue : (boolean[]) ret;
     }
 
     /**
@@ -375,14 +388,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (byte[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public byte[] getByteArray(String key) {
+        return getByteArray(key, new byte[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public byte[] getByteArray(String key, byte[] defaultValue) {
         Object ret = map.get(key);
-        return (byte[]) ret;
+        return ret == null ? defaultValue : (byte[]) ret;
     }
 
     /**
@@ -410,14 +436,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (char[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public char[] getCharArray(String key) {
+        return getCharArray(key, new char[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public char[] getCharArray(String key, char[] defaultValue) {
         Object ret = map.get(key);
-        return (char[]) ret;
+        return ret == null ? defaultValue : (char[]) ret;
     }
 
     /**
@@ -444,15 +483,29 @@ public final class Bundle {
         return ret == null ? defaultValue : (short) ret;
     }
 
+
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (short[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public short[] getShortArray(String key) {
+        return getShortArray(key, new short[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public short[] getShortArray(String key, short[] defaultValue) {
         Object ret = map.get(key);
-        return (short[]) ret;
+        return ret == null ? defaultValue : (short[]) ret;
     }
 
     /**
@@ -480,14 +533,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (boolean[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public int[] getIntArray(String key) {
+        return getIntArray(key, new int[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public int[] getIntArray(String key, int[] defaultValue) {
         Object ret = map.get(key);
-        return (int[]) ret;
+        return ret == null ? defaultValue : (int[]) ret;
     }
 
     /**
@@ -515,14 +581,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (long[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public long[] getLongArray(String key) {
+        return getLongArray(key, new long[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public long[] getLongArray(String key, long[] defaultValue) {
         Object ret = map.get(key);
-        return (long[]) ret;
+        return ret == null ? defaultValue : (long[]) ret;
     }
 
     /**
@@ -550,14 +629,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (float[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public float[] getFloatArray(String key) {
+        return getFloatArray(key, new float[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public float[] getFloatArray(String key, float[] defaultValue) {
         Object ret = map.get(key);
-        return (float[]) ret;
+        return ret == null ? defaultValue : (float[]) ret;
     }
 
     /**
@@ -585,14 +677,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (boolean[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public double[] getDoubleArray(String key) {
+        return getDoubleArray(key, new double[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public double[] getDoubleArray(String key, double[] defaultValue) {
         Object ret = map.get(key);
-        return (double[]) ret;
+        return ret == null ? defaultValue : (double[]) ret;
     }
 
     /**
@@ -620,14 +725,27 @@ public final class Bundle {
     }
 
     /**
-     * Vrátí pole spojené se zadaným klíčem
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo (boolean[]) pole o velikosti 0, pokud neexistuej žádné spojení s klíčem
      *
      * @param key Klíč
      * @return Pole hodnot
      */
     public String[] getStringArray(String key) {
+        return getStringArray(key, new String[0]);
+    }
+
+    /**
+     * Vrátí pole spojené se zadaným klíčem,
+     * nebo výchozí hodnotu, pokud neexistuje žádné spojení s klíčem
+     *
+     * @param key Klíč
+     * @param defaultValue Hodnota, která se vrátí, pokud klíč neexistuje
+     * @return Pole hodnot
+     */
+    public String[] getStringArray(String key, String[] defaultValue) {
         Object ret = map.get(key);
-        return (String[]) ret;
+        return ret == null ? defaultValue : (String[]) ret;
     }
 
 }
