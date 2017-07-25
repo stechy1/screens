@@ -1,31 +1,41 @@
 package cz.stechy.screens;
 
-import javafx.util.Duration;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Třída představující jednu notifikaci
  */
 public final class Notification {
 
-    public final String text;
-    public final Duration duration;
+    public final String message;
+    public final String actionText;
+    public final Length length;
+    public final boolean persistent;
+    public final EventHandler<? super MouseEvent> actionHandler;
 
-    public Notification(String text, Duration duration) {
-        this.text = text;
-        this.duration = duration;
+    public Notification(String message) {
+        this(message, Length.SHORT);
+    }
+
+    public Notification(String message, Length length) {
+        this.message = message;
+        this.length = length;
+        this.actionText = null;
+        this.persistent = false;
+        this.actionHandler = null;
+    }
+
+    public Notification(String message, String actionText,
+        EventHandler<? super MouseEvent> actionHandler) {
+        this.message = message;
+        this.actionText = actionText;
+        this.actionHandler = actionHandler;
+        this.length = Length.INFINITE;
+        this.persistent = true;
     }
 
     public enum Length {
-        SHORT(1), LONG(3);
-
-        private final Duration duration;
-
-        Length(int seconds) {
-            this.duration = Duration.seconds(seconds);
-        }
-
-        public Duration getDuration() {
-            return duration;
-        }
+        SHORT, LONG, INFINITE
     }
 }

@@ -45,16 +45,16 @@ public class MainController implements Initializable, IMainScreen {
         return container;
     }
 
-    @Override
-    public void showNotification(String text) {
-        notification.setText(text);
-        notificationVisibility.set(true);
-    }
-
-    @Override
-    public void hideNotification() {
-        notificationVisibility.set(false);
-    }
+//    @Override
+//    public void showNotification(String text) {
+//        notification.setText(text);
+//        notificationVisibility.set(true);
+//    }
+//
+//    @Override
+//    public void hideNotification() {
+//        notificationVisibility.set(false);
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

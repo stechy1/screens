@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Example extends Application {
@@ -17,7 +17,6 @@ public class Example extends Application {
 
     private static void initScreenManager() {
         ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.Builder()
-            .baseFxml(Example.class.getClassLoader().getResource("main.fxml"))
             .fxml(Example.class.getClassLoader().getResource("view"))
             .css(Example.class.getClassLoader().getResource("css/style.css"))
             .lang(Example.class.getClassLoader().getResource("lang"))
@@ -39,7 +38,8 @@ public class Example extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(manager.getScreenManagerConfiguration().baseFxml);
         loader.setResources(manager.getResources());
-        Parent parent = loader.load();
+        AnchorPane parent = loader.load();
+        parent.setStyle("-fx-background-color: transparent;");
         IMainScreen controlledScreen = loader.getController();
         //manager.setControllerFactory();
         manager.setMainScreen(controlledScreen);
@@ -47,7 +47,7 @@ public class Example extends Application {
         manager.loadScreens();
         manager.resize(800, 600);
         manager.setTitle(manager.getResources().getString("title"));
-        manager.showNewDialog(parent, primaryStage);
+        manager.showNewDialog(parent, primaryStage, true);
         manager.showScreen("file1", null);
     }
 }

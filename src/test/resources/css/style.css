@@ -5,8 +5,29 @@
     -fx-background-color: #CCFF99;
 }
 
-.notification {
+.jfx-snackbar-toast {
     -fx-background-color: "darkgrey";
     -fx-label-padding: 8;
     -fx-background-radius: 16;
+}
+
+.jfx-decorator-buttons-container {
+    -fx-background-color: orange;
+}
+
+.resize-border {
+    -fx-background-color: blue;
+    -fx-border-color: green;
+    -fx-border-radius: 0 0 30 30;
+    -fx-background-radius: 0 0 30 30;
+    -fx-border-width: 0px 3px 3px 3px;
+}
+
+.jfx-decorator-button {
+    -fx-background-color: lightblue;
+    -fx-text-fill: azure;
+}
+
+.jfx-decorator {
+    -fx-background-color: rgba(255, 255, 255, 0);
 }

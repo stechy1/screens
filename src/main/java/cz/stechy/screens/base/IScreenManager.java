@@ -17,7 +17,7 @@
 package cz.stechy.screens.base;
 
 import cz.stechy.screens.Bundle;
-import javafx.util.Duration;
+import cz.stechy.screens.Notification;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
@@ -152,8 +152,9 @@ public interface IScreenManager {
 
     /**
      * Zobrazí v aktuálním screenu notifikaci
-     *  @param text Text notifikace
-     * @param duration
+     *
+     * @param notification {@link Notification}
      */
-    void showNotification(String text, Duration duration);
+    void showNotification(Notification notification);
+
 }

@@ -16,6 +16,10 @@
 
 package cz.stechy.screens;
 
+import com.jfoenix.controls.JFXDecorator;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
+import cz.stechy.screens.Notification.Length;
 import cz.stechy.screens.animation.FadeAnimator;
 import cz.stechy.screens.animation.IScreenAnimator;
 import cz.stechy.screens.base.IMainScreen;
@@ -25,27 +29,24 @@ import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Queue;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Stack;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.animation.Transition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -79,9 +80,6 @@ public final class ScreenManager implements IScreenManager {
     private final List<String> mBlackList = new ArrayList<>();
     // Kolekce s okny, které spravuje tento screen manager
     private final List<IScreenManager> mChildScreenManagers = new ArrayList<>();
-    // Kolekce s notifikacemi, které se zobrazují na screenu
-    private final Queue<Notification> notifications = new ArrayDeque<>();
-    private final BooleanProperty notifiing = new SimpleBooleanProperty();
     // Titulek okna
     private final StringProperty mTitle = new SimpleStringProperty();
     // Konfigurace obsahující cesty k důležitým adresářům
@@ -102,6 +100,7 @@ public final class ScreenManager implements IScreenManager {
     private double mWidth;
     // Výška okna
     private double mHeight;
+    private JFXSnackbar snackbar;
 
     // endregion
 
@@ -230,29 +229,6 @@ public final class ScreenManager implements IScreenManager {
         ((Stage) screen.screenInfo.node.getScene().getWindow()).close();
     }
 
-    /**
-     * Zobrazí notifikaci z fronty pouze, pokud není žádná notifikace zobrazena
-     */
-    private synchronized void nextNotification() {
-        if (notifiing.get() || notifications.isEmpty()) {
-            return;
-        }
-
-        final Notification notification = notifications.poll();
-        final Timeline timeline = new Timeline(new KeyFrame(
-            notification.duration, event -> {
-                mMainScreen.hideNotification();
-                notifiing.set(false);
-                nextNotification();
-            }
-        ));
-
-        mMainScreen.showNotification(notification.text);
-        notifiing.set(true);
-        timeline.setCycleCount(1);
-        timeline.play();
-    }
-
     // endregion
 
     // region Public methods
@@ -295,12 +271,28 @@ public final class ScreenManager implements IScreenManager {
 
     /**
      * Zobrazí nový dialog
-     *  @param parent Kořenový prvek
+     * @param parent Kořenový prvek
      * @param stage Okno, ve kterém se má dialog zobrazit
+     * @param undecorate
      */
-    public void showNewDialog(Parent parent, Stage stage) {
-        Scene scene = new Scene(parent);
+    public void showNewDialog(AnchorPane parent, Stage stage, boolean undecorate) {
+        final Scene scene;
+        if (undecorate) {
+            final JFXDecorator decorator = new JFXDecoratorWithTitle(stage, parent, false, true, true);
+            scene = new Scene(decorator);
+            stage.initStyle(StageStyle.TRANSPARENT);
+        } else {
+            scene = new Scene(parent);
+        }
         scene.getStylesheets().setAll(mConfiguration.css);
+        scene.setFill(null);
+        final Optional<Node> notificationContainer = parent.getChildren().stream()
+            .filter(node -> node.getId().equals("notificationContainer")).findFirst();
+        if (notificationContainer.isPresent()) {
+            snackbar = new JFXSnackbar((Pane) notificationContainer.get());
+        } else {
+            snackbar = new JFXSnackbar(parent);
+        }
         stage.setScene(scene);
         stage.setWidth(mWidth);
         stage.setHeight(mHeight);
@@ -434,12 +426,12 @@ public final class ScreenManager implements IScreenManager {
         try {
             FXMLLoader loader = new FXMLLoader(mConfiguration.baseFxml);
             loader.setResources(mResources);
-            Parent parent = loader.load();
+            AnchorPane parent = loader.load();
             IMainScreen mainScreen = loader.getController();
             ScreenManager newManager = new ScreenManager(this, actionId);
             mChildScreenManagers.add(newManager);
             newManager.setMainScreen(mainScreen);
-            newManager.showNewDialog(parent, new Stage());
+            newManager.showNewDialog(parent, new Stage(), true);
             newManager.showScreen(name, bundle);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -451,7 +443,7 @@ public final class ScreenManager implements IScreenManager {
         try {
             FXMLLoader loader = new FXMLLoader(mConfiguration.baseFxml);
             loader.setResources(mResources);
-            Parent parent = loader.load();
+            AnchorPane parent = loader.load();
             IMainScreen mainScreen = loader.getController();
             ScreenManager newManager = new ScreenManager(this, actionId);
             mChildScreenManagers.add(newManager);
@@ -462,7 +454,7 @@ public final class ScreenManager implements IScreenManager {
             stage.setResizable(false);
             stage.setAlwaysOnTop(true);
             newManager.setMainScreen(mainScreen);
-            newManager.showNewDialog(parent, stage);
+            newManager.showNewDialog(parent, stage, false);
             parent.setStyle("-fx-background: darkgrey");
             newManager.showScreen(name, bundle);
             mMainScreen.getContainer().getScene().getWindow().focusedProperty().addListener((observable, oldValue, hasFocus) -> {
@@ -542,12 +534,24 @@ public final class ScreenManager implements IScreenManager {
     }
 
     @Override
-    public void showNotification(String text, Duration duration) {
-        notifications.add(new Notification(text, duration));
-        nextNotification();
+    public void showNotification(Notification notification) {
+        long timeout = (long) NOTIFICATION_TIMEOUT[notification.length.ordinal()].toMillis();
+        snackbar.enqueue(new SnackbarEvent(notification.message, notification.actionText, timeout,
+            notification.length == Length.INFINITE, event -> {
+            if (notification.actionHandler != null) {
+                notification.actionHandler.handle(event);
+            }
+            snackbar.close();
+        }));
     }
 
     public interface OnDialogShow {
         void onShow();
     }
+
+    private static final Duration[] NOTIFICATION_TIMEOUT = new Duration[] {
+        Duration.seconds(1),
+        Duration.millis(2500),
+        Duration.INDEFINITE
+    };
 }

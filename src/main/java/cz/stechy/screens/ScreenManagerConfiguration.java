@@ -26,14 +26,13 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public final class ScreenManagerConfiguration {
 
-    public static final URL DEFAULT_FXML_BASE_FILE = null;
     public static final URL DEFAULT_FXML = null;
     public static final URL DEFAULT_IMG = null;
     public static final URL DEFAULT_AUD = null;
     public static final URL DEFAULT_CONFIG = null;
     public static final URL DEFAULT_LANG = null;
 
-    public final URL baseFxml;
+    public final URL baseFxml = ScreenManagerConfiguration.class.getClassLoader().getResource("root.fxml");
     // Cesta ke složce, kde se nachází FXML soubory
     public final URL fxml;
     // Cesta ke složce, kde se nachází CSS soubory
@@ -49,7 +48,6 @@ public final class ScreenManagerConfiguration {
 
     /**
      * Vytvoří novou konfiguraci s parametry
-     *  @param baseFxml
      * @param fxml Cesta ke složce, kde se nachází FXML soubory
      * @param css Kolekce souborů se styly
      * @param images Cesta ke složce, kde se nachází soubory s obrázky
@@ -57,8 +55,7 @@ public final class ScreenManagerConfiguration {
      * @param config Cesta ke složce, kde se nachází konfigurační soubory
      * @param lang Cesta ke složce, kde se nachází soubory s překladem
      */
-    private ScreenManagerConfiguration(URL baseFxml, URL fxml, List<String> css, URL images, URL audio, URL config, URL lang) {
-        this.baseFxml = baseFxml;
+    private ScreenManagerConfiguration(URL fxml, List<String> css, URL images, URL audio, URL config, URL lang) {
         this.fxml = fxml;
         this.css = css;
         this.images = images;
@@ -69,7 +66,6 @@ public final class ScreenManagerConfiguration {
 
     public static final class Builder {
 
-        private URL baseFxml = DEFAULT_FXML_BASE_FILE;
         private URL fxml = DEFAULT_FXML;
         private List<String> css = new ArrayList<>();
         private URL images = DEFAULT_IMG;
@@ -77,18 +73,7 @@ public final class ScreenManagerConfiguration {
         private URL config = DEFAULT_CONFIG;
         private URL lang = DEFAULT_LANG;
 
-        /**
-         * Nastaví cestu ke všem fxml dokumentům
-         *
-         * @param baseFxml Cesta k základnímu fxml souboru
-         * @return {@link Builder}
-         */
-        public Builder baseFxml(URL baseFxml) {
-            this.baseFxml = baseFxml;
-            return this;
-        }
-
-        /**
+         /**
          * Nastaví cestu ke všem fxml dokumentům
          *
          * @param fxml Cesta ke kořenovému adresáři, kde se nachází všechny fxml dokumenty
@@ -155,7 +140,7 @@ public final class ScreenManagerConfiguration {
         }
 
         public ScreenManagerConfiguration build() {
-            return new ScreenManagerConfiguration(baseFxml, fxml, css, images, audio, config, lang);
+            return new ScreenManagerConfiguration( fxml, css, images, audio, config, lang);
         }
     }
 }

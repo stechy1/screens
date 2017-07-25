@@ -35,15 +35,15 @@ public interface IMainScreen {
      */
     Node getContainer();
 
-    /**
-     * Zobrazí notifikaci s textem
-     *
-     * @param text Text, který se zobrazí v notifikaci
-     */
-    void showNotification(String text);
-
-    /**
-     * Odstraní notifikaci
-     */
-    void hideNotification();
+//    /**
+//     * Zobrazí notifikaci s textem
+//     *
+//     * @param text Text, který se zobrazí v notifikaci
+//     */
+//    void showNotification(String text);
+//
+//    /**
+//     * Odstraní notifikaci
+//     */
+//    void hideNotification();
 }

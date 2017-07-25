@@ -315,10 +315,10 @@ public abstract class BaseController implements IControlledScreen {
     /**
      * Zobrazí v aktuálním screenu notifikaci
      *
-     * @param text Text notifikace
+     * @param notification {@link Notification}
      */
-    protected void showNotification(String text, Notification.Length length) {
-        mManager.showNotification(text, length.getDuration());
+    protected void showNotification(Notification notification) {
+        mManager.showNotification(notification);
     }
 
     /**

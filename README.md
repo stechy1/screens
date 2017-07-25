@@ -1,5 +1,6 @@
-# Screens framework
+# Screens framework v2.0
 Jedná se o jednoduchý pomocný framework pro správu oken v JavaFX. Je velmi inspirován aktivitami v Androidu.
+Od verze 2.0 je framework závislý na knihovne JFoenix. Přidává vlastní vzhled celého okna.
 ## Inicializace
 Nejdříve je potřeba vytvořit třídu **ScreenManagerConfiguration**, která bude obsahovat cesty k důležitým souborům a složkám, které framework vyžaduje pro bezproblémový běh.
 ### ScreenManagerConfiguration
@@ -125,3 +126,18 @@ Všechny ostatní kontrolery, které budou spravovány frameworkem musí dědit 
             startNewDialog("file3"); // Zobrazí screen v novém okně
         }
     }
+
+## Dekorace okna
+Pro změnu barvy celého okna je třeba upravit styly.
+  - _jfx-decorator-buttons-container_ Pro úpravu lišty s tlačítky
+  - _jfx-decorator-button_ Pro úpravu tlačítek
+  - _jfx-decorator-content-container_ Pro úpravu pozadí okna
+  - _resize-border_ Pro úpravu rámečku okna
+  
+### Tipy
+Pro průhledné pozadí okna lze přidat tento styl:
+```
+  .jfx-decorator {
+      -fx-background-color: rgba(255, 255, 255, 0);
+  }
+```
