@@ -545,6 +545,11 @@ public final class ScreenManager implements IScreenManager {
         }));
     }
 
+    @Override
+    public Node getRoot() {
+        return mMainScreen.getContainer();
+    }
+
     public interface OnDialogShow {
         void onShow();
     }

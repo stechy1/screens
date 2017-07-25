@@ -157,4 +157,11 @@ public interface IScreenManager {
      */
     void showNotification(Notification notification);
 
+    /**
+     * Vrátí kořenový prvek na scéně
+     *
+     * @return {@link Node}
+     */
+    Node getRoot();
+
 }

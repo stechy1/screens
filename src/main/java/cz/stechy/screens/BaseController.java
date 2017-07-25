@@ -328,4 +328,8 @@ public abstract class BaseController implements IControlledScreen {
     public void setScreenManager(final IScreenManager screenManager) {
         mManager = screenManager;
     }
+
+    public Node getRoot() {
+        return mManager.getRoot();
+    }
 }
