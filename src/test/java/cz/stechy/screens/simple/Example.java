@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 
 public class Example extends Application {
 
-    private static ScreenManager manager;
+    private ScreenManager manager;
 
-    private static void initScreenManager() {
+    private void initScreenManager() {
         ScreenManagerConfiguration configuration = new ScreenManagerConfiguration.Builder()
             .fxml(Example.class.getClassLoader().getResource("view"))
             .css(Example.class.getClassLoader().getResource("css/style.css"))
@@ -30,8 +30,13 @@ public class Example extends Application {
     }
 
     public static void main(String[] args) {
-        initScreenManager();
         launch(args);
+    }
+
+    @Override
+    public void init() throws Exception {
+        ScreenManager.setKeyPressedHandler(event -> System.out.println("Bylo stisknuto: " + event.getText()));
+        initScreenManager();
     }
 
     @Override

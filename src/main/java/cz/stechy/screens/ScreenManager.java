@@ -41,10 +41,12 @@ import java.util.Stack;
 import javafx.animation.Transition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -101,6 +103,10 @@ public final class ScreenManager implements IScreenManager {
     // Výška okna
     private double mHeight;
     private JFXSnackbar snackbar;
+    // Handler pro odchycení události zmáčknuté klávesy v aktivním okně
+    private static EventHandler<? super KeyEvent> keyPressedHandler;
+    // Handler pro odchycení události puštění klávesy v aktivním okne
+    private static EventHandler<? super KeyEvent> keyReleasedHandler;
 
     // endregion
 
@@ -163,6 +169,33 @@ public final class ScreenManager implements IScreenManager {
             this.mScreenLoader = new SimpleScreenLoader(screenManagerConfiguration.fxml, mBlackList);
         }
     }
+
+    // endregion
+
+    // region Public static methody
+
+    /**
+     * Nastaví handler pro událost stisknu klávesy pro všechny okna spravovaná správcem
+     */
+    public static void setKeyPressedHandler(EventHandler<? super KeyEvent> keyPressedHandler) {
+        if (ScreenManager.keyPressedHandler != null) {
+            return;
+        }
+
+        ScreenManager.keyPressedHandler = keyPressedHandler;
+    }
+
+    /**
+     * Nastaví handler pro událost uvolnění klávesy pro všechny okna spravovaná správcem
+     */
+    public static void setKeyReleasedHandler(EventHandler<? super KeyEvent> keyReleasedHandler) {
+        if (ScreenManager.keyReleasedHandler != null) {
+            return;
+        }
+
+        ScreenManager.keyReleasedHandler = keyReleasedHandler;
+    }
+
 
     // endregion
 
@@ -286,6 +319,8 @@ public final class ScreenManager implements IScreenManager {
         }
         scene.getStylesheets().setAll(mConfiguration.css);
         scene.setFill(null);
+        scene.setOnKeyPressed(keyPressedHandler);
+        scene.setOnKeyReleased(keyReleasedHandler);
         final Optional<Node> notificationContainer = parent.getChildren().stream()
             .filter(node -> node.getId().equals("notificationContainer")).findFirst();
         if (notificationContainer.isPresent()) {
