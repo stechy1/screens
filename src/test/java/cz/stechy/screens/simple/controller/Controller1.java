@@ -50,4 +50,9 @@ public class Controller1 extends BaseController {
         showNotification(new Notification("Testovací notifikace: " + id++));
         //showNotification("Testovací notifikace: " + id++, Length.LONG);
     }
+
+    @Override
+    protected void onClose() {
+        System.out.println("On close");
+    }
 }

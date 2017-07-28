@@ -16,6 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 class JFXDecoratorWithTitle extends JFXDecorator {
 
@@ -52,6 +53,11 @@ class JFXDecoratorWithTitle extends JFXDecorator {
                     }
                 });
             }
+
+            JFXButton btnClose = (JFXButton) buttons.get(buttons.size() - 1);
+            btnClose.setOnAction(event -> {
+                stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+            });
 
             final HBox leftBox = new HBox();
             leftBox.setAlignment(Pos.CENTER_LEFT);

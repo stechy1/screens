@@ -39,10 +39,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.animation.Transition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -51,6 +54,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -70,6 +74,10 @@ public final class ScreenManager implements IScreenManager {
 
     // region Variables
 
+    // Handler pro odchycení události zmáčknuté klávesy v aktivním okně
+    private static EventHandler<? super KeyEvent> keyPressedHandler;
+    // Handler pro odchycení události puštění klávesy v aktivním okne
+    private static EventHandler<? super KeyEvent> keyReleasedHandler;
     // Rodičovský screen manažer. Pouze, pokud se jedná o dialog
     private final ScreenManager mParentManager;
     // Id akce
@@ -84,6 +92,8 @@ public final class ScreenManager implements IScreenManager {
     private final List<IScreenManager> mChildScreenManagers = new ArrayList<>();
     // Titulek okna
     private final StringProperty mTitle = new SimpleStringProperty();
+    // Příznak zda-li je zobrazená notifikace, či nikoliv
+    private final BooleanProperty mShowingNotification = new SimpleBooleanProperty();
     // Konfigurace obsahující cesty k důležitým adresářům
     private ScreenManagerConfiguration mConfiguration;
     // Resources
@@ -103,10 +113,6 @@ public final class ScreenManager implements IScreenManager {
     // Výška okna
     private double mHeight;
     private JFXSnackbar snackbar;
-    // Handler pro odchycení události zmáčknuté klávesy v aktivním okně
-    private static EventHandler<? super KeyEvent> keyPressedHandler;
-    // Handler pro odchycení události puštění klávesy v aktivním okne
-    private static EventHandler<? super KeyEvent> keyReleasedHandler;
 
     // endregion
 
@@ -309,6 +315,7 @@ public final class ScreenManager implements IScreenManager {
      * @param undecorate
      */
     public void showNewDialog(AnchorPane parent, Stage stage, boolean undecorate) {
+        stage.setOnCloseRequest(windowCloseHandler);
         final Scene scene;
         if (undecorate) {
             final JFXDecorator decorator = new JFXDecoratorWithTitle(stage, parent, false, true, true);
@@ -321,10 +328,13 @@ public final class ScreenManager implements IScreenManager {
         scene.setFill(null);
         scene.setOnKeyPressed(keyPressedHandler);
         scene.setOnKeyReleased(keyReleasedHandler);
-        final Optional<Node> notificationContainer = parent.getChildren().stream()
+        final Optional<Node> notificationContainerOptional = parent.getChildren().stream()
             .filter(node -> node.getId().equals("notificationContainer")).findFirst();
-        if (notificationContainer.isPresent()) {
-            snackbar = new JFXSnackbar((Pane) notificationContainer.get());
+        if (notificationContainerOptional.isPresent()) {
+            Pane notificationContainer = (Pane) notificationContainerOptional.get();
+            snackbar = new JFXSnackbar(notificationContainer);
+            Group group = (Group) notificationContainer.getChildren().get(0);
+            notificationContainer.visibleProperty().bind(group.visibleProperty());
         } else {
             snackbar = new JFXSnackbar(parent);
         }
@@ -585,6 +595,13 @@ public final class ScreenManager implements IScreenManager {
         return mMainScreen.getContainer();
     }
 
+    public void setOnCloseWindowHandler(EventHandler<WindowEvent> windowCloseHandler) {
+        this.windowCloseHandler = event -> {
+            mActiveScreens.peek().screenInfo.controller.onClose();
+            windowCloseHandler.handle(event);
+        };
+    }
+
     public interface OnDialogShow {
         void onShow();
     }
@@ -594,4 +611,7 @@ public final class ScreenManager implements IScreenManager {
         Duration.millis(2500),
         Duration.INDEFINITE
     };
+
+    private EventHandler<WindowEvent> windowCloseHandler = event ->
+        mActiveScreens.peek().screenInfo.controller.onClose();
 }

@@ -50,9 +50,11 @@ public class Example extends Application {
         manager.setMainScreen(controlledScreen);
         manager.addScreensToBlacklist("screen4", "screen7");
         manager.loadScreens();
-        manager.resize(800, 600);
         manager.setTitle(manager.getResources().getString("title"));
         manager.showNewDialog(parent, primaryStage, true);
         manager.showScreen("file1", null);
+        manager.resize(500, 450);
     }
+
+
 }
