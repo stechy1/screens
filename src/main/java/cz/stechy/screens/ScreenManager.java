@@ -113,6 +113,7 @@ public final class ScreenManager implements IScreenManager {
     // Výška okna
     private double mHeight;
     private JFXSnackbar snackbar;
+    private EventHandler<WindowEvent> windowCloseHandler;
 
     // endregion
 
@@ -315,7 +316,7 @@ public final class ScreenManager implements IScreenManager {
      * @param undecorate
      */
     public void showNewDialog(AnchorPane parent, Stage stage, boolean undecorate) {
-        stage.setOnCloseRequest(windowCloseHandler);
+        stage.setOnCloseRequest(mOnCloseHandlerInternal);
         final Scene scene;
         if (undecorate) {
             final JFXDecorator decorator = new JFXDecoratorWithTitle(stage, parent, false, true, true);
@@ -596,10 +597,7 @@ public final class ScreenManager implements IScreenManager {
     }
 
     public void setOnCloseWindowHandler(EventHandler<WindowEvent> windowCloseHandler) {
-        this.windowCloseHandler = event -> {
-            mActiveScreens.peek().screenInfo.controller.onClose();
-            windowCloseHandler.handle(event);
-        };
+        this.windowCloseHandler = windowCloseHandler;
     }
 
     public interface OnDialogShow {
@@ -612,6 +610,10 @@ public final class ScreenManager implements IScreenManager {
         Duration.INDEFINITE
     };
 
-    private EventHandler<WindowEvent> windowCloseHandler = event ->
+    private final EventHandler<WindowEvent> mOnCloseHandlerInternal = event -> {
         mActiveScreens.peek().screenInfo.controller.onClose();
+        if (this.windowCloseHandler != null) {
+            windowCloseHandler.handle(event);
+        }
+    };
 }
