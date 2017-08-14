@@ -78,6 +78,8 @@ public final class ScreenManager implements IScreenManager {
     private static EventHandler<? super KeyEvent> keyPressedHandler;
     // Handler pro odchycení události puštění klávesy v aktivním okne
     private static EventHandler<? super KeyEvent> keyReleasedHandler;
+    // Globální nastavení dekorátoru pro všechna okna
+    private static boolean undecorateGlobal = false;
     // Rodičovský screen manažer. Pouze, pokud se jedná o dialog
     private final ScreenManager mParentManager;
     // Id akce
@@ -203,6 +205,13 @@ public final class ScreenManager implements IScreenManager {
         ScreenManager.keyReleasedHandler = keyReleasedHandler;
     }
 
+    /**
+     * Aktivuje globální undecorator.
+     * Všechna okna budou použivat vlastní vzhled
+     */
+    public static void enableGlobalUndecorator() {
+        undecorateGlobal = true;
+    }
 
     // endregion
 
@@ -477,7 +486,7 @@ public final class ScreenManager implements IScreenManager {
             ScreenManager newManager = new ScreenManager(this, actionId);
             mChildScreenManagers.add(newManager);
             newManager.setMainScreen(mainScreen);
-            newManager.showNewDialog(parent, new Stage(), true);
+            newManager.showNewDialog(parent, new Stage(), undecorateGlobal);
             newManager.showScreen(name, bundle);
         } catch (IOException ex) {
             ex.printStackTrace();
