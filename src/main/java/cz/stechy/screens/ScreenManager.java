@@ -29,6 +29,7 @@ import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -278,6 +279,11 @@ public final class ScreenManager implements IScreenManager {
         ((Stage) screen.screenInfo.node.getScene().getWindow()).close();
     }
 
+    URL getScreenUrl(String name) {
+        final ScreenInfo screenInfo = mScreens.get(name);
+        return screenInfo.url;
+    }
+
     // endregion
 
     // region Public methods
@@ -407,6 +413,10 @@ public final class ScreenManager implements IScreenManager {
      */
     public void setControllerFactory(Callback<Class<?>, Object> factory) {
         this.mFactory = factory;
+    }
+
+    public Callback<Class<?>, Object> getFactory() {
+        return mFactory;
     }
 
     /**
@@ -603,6 +613,11 @@ public final class ScreenManager implements IScreenManager {
     @Override
     public Node getRoot() {
         return mMainScreen.getContainer();
+    }
+
+    @Override
+    public ScreenPartManager getPartManager() {
+        return new ScreenPartManager(this);
     }
 
     public void setOnCloseWindowHandler(EventHandler<WindowEvent> windowCloseHandler) {

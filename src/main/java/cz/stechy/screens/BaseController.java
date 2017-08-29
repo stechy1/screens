@@ -359,5 +359,8 @@ public abstract class BaseController implements IControlledScreen {
         return mManager.getRoot();
     }
 
+    public ScreenPartManager getPartManager() {
+        return mManager.getPartManager();
+    }
     // endregion
 }
