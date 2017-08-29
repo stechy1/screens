@@ -25,15 +25,25 @@ import javafx.scene.Node;
  */
 public abstract class BaseController implements IControlledScreen {
 
+    // region Constants
+
     // Příznak pro úspěšnou akci
     public static final int RESULT_FAIL = 0;
     // Příznak pro neúspěšnou akci
     public static final int RESULT_SUCCESS = 1;
 
+    // endregion
+
+    // region Variables
+
     // Screen manager
     private IScreenManager mManager;
     // Výsledek akce
     private int mResult = RESULT_FAIL;
+
+    // endregion
+
+    // region Public methods
 
     /**
      * Metoda je zavolána před {@code onCreate}
@@ -78,6 +88,8 @@ public abstract class BaseController implements IControlledScreen {
 
     }
 
+    // region Screens
+
     /**
      * Zobrazí nový screen a vloží ho na stack
      *
@@ -119,6 +131,10 @@ public abstract class BaseController implements IControlledScreen {
         mManager.showScreenForResult(name, actionId, bundle);
     }
 
+    // endregion
+
+    // region Dialogs
+
     /**
      * Zobrazí nový dialog
      *
@@ -158,6 +174,10 @@ public abstract class BaseController implements IControlledScreen {
     public void startNewDialogForResult(final String name, final int actionId, final Bundle bundle) {
         mManager.showDialogForResult(name, actionId, bundle);
     }
+
+    // endregion
+
+    // region Popups
 
     /**
      * Zobrazí popup dialog na pozici získané z rodičovského prvku
@@ -251,6 +271,10 @@ public abstract class BaseController implements IControlledScreen {
         mManager.showPopupForResult(name, actionId, bundle, x, y);
     }
 
+    // endregion
+
+    // region Navigation
+
     /**
      * Nastaví výsledek akce
      *
@@ -285,6 +309,8 @@ public abstract class BaseController implements IControlledScreen {
     protected void finish(final Bundle bundle) {
         mManager.finish(bundle, mResult);
     }
+
+    // endregion
 
     /**
      * Nastaví velikost okna
@@ -332,4 +358,9 @@ public abstract class BaseController implements IControlledScreen {
     public Node getRoot() {
         return mManager.getRoot();
     }
+
+    public ScreenPartManager getPartManager() {
+        return mManager.getPartManager();
+    }
+    // endregion
 }

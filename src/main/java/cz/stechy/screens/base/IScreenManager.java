@@ -18,6 +18,7 @@ package cz.stechy.screens.base;
 
 import cz.stechy.screens.Bundle;
 import cz.stechy.screens.Notification;
+import cz.stechy.screens.ScreenPartManager;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
@@ -164,4 +165,5 @@ public interface IScreenManager {
      */
     Node getRoot();
 
+    ScreenPartManager getPartManager();
 }
