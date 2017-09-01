@@ -37,16 +37,14 @@ public class Controller1 extends BaseController implements Initializable {
 
     @Override
     protected void onCreate(Bundle bundle) {
-        getPartManager().inContainer(partContainer).onLoaded(child, Object controller -> System.out.println("Loaded")).show("part1");
+        getPartManager().inContainer(partContainer).onLoaded((child, controller) -> System.out.println("Loaded")).show("part1");
     }
 
     public void goTo2(ActionEvent actionEvent) {
-        //startScreen("file2");
         startScreenForResult("file2", 1);
     }
 
     public void goTo3(ActionEvent actionEvent) {
-        //startScreen("file3");
         startNewDialogForResult("file3", 1);
     }
 
@@ -74,7 +72,6 @@ public class Controller1 extends BaseController implements Initializable {
 
     public void handleNotify(ActionEvent actionEvent) {
         showNotification(new Notification("Testovací notifikace: " + id++));
-        //showNotification("Testovací notifikace: " + id++, Length.LONG);
     }
 
     @Override

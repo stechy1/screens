@@ -24,7 +24,6 @@ public class MainController implements Initializable, IMainScreen {
     private final BooleanProperty notificationVisibility = new SimpleBooleanProperty();
 
     {
-//        notification.getStyleClass().add("notification");
         notification.setStyle("-fx-background-color: 'darkgrey'; -fx-label-padding: 8; -fx-background-radius: 16;");
         StackPane.setAlignment(notification, Pos.BOTTOM_CENTER);
         StackPane.setMargin(notification, new Insets(8.0));

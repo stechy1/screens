@@ -27,7 +27,6 @@ import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
 import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,8 +39,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.animation.Transition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
@@ -51,8 +48,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -95,8 +92,6 @@ public final class ScreenManager implements IScreenManager {
     private final List<IScreenManager> mChildScreenManagers = new ArrayList<>();
     // Titulek okna
     private final StringProperty mTitle = new SimpleStringProperty();
-    // Příznak zda-li je zobrazená notifikace, či nikoliv
-    private final BooleanProperty mShowingNotification = new SimpleBooleanProperty();
     // Konfigurace obsahující cesty k důležitým adresářům
     private ScreenManagerConfiguration mConfiguration;
     // Resources
@@ -130,7 +125,6 @@ public final class ScreenManager implements IScreenManager {
     private ScreenManager(final ScreenManager parentManager, final int actionId) {
         this.mParentManager = parentManager;
         this.mActionId = actionId;
-        //this.mScreens.putAll(parentManager.mScreens);
         this.mBlackList.addAll(parentManager.mBlackList);
         this.mConfiguration = parentManager.mConfiguration;
         this.mResources = parentManager.mResources;
@@ -217,30 +211,6 @@ public final class ScreenManager implements IScreenManager {
     // endregion
 
     // region Private methods
-
-    /**
-     * Načte všechny screeny
-     *
-     * @param directory Složka s FXML soubory
-     */
-    private void loadScreens(final File directory) throws IOException {
-        final File[] views = directory.listFiles();
-        assert views != null;
-        for (File entry : views) {
-            if (entry.isDirectory()) {
-                loadScreens(entry);
-            } else {
-                final String name = entry.getName();
-                final int dotIndex = name.indexOf(".");
-                final String clearName = name
-                    .substring(0, dotIndex > -1 ? dotIndex : name.length());
-                if (mBlackList.contains(clearName)) {
-                    continue;
-                }
-                mScreens.put(clearName, new ScreenInfo(clearName, entry.toURI().toURL()));
-            }
-        }
-    }
 
     /**
      * Načte fxml soubor, přidá screen do kolekce
@@ -434,7 +404,6 @@ public final class ScreenManager implements IScreenManager {
     public void showScreenForResult(String name, int actionId, Bundle bundle) {
         final ScreenInfo screenInfo = mScreens.get(name);
         final Node container = mMainScreen.getContainer();
-        //final DoubleProperty opacity = mMainScreen.getContainer().opacityProperty();
         assert screenInfo != null;
         try {
             loadScreen(screenInfo);
@@ -544,7 +513,6 @@ public final class ScreenManager implements IScreenManager {
         } else { // Pokud aktuální screen má rodiče
             mActiveScreens.pop(); // Můžu popnout pouze tehdy, pokud má nějakého rodiče
             final Node container = mMainScreen.getContainer();
-            // TODO přepnout screeny v okně
             final ActiveScreen previousScreen = mActiveScreens.peek();
             // Vím, že rodič existuje, protože prošel horní podmínkou
             assert previousScreen != null;

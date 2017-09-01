@@ -37,7 +37,6 @@ public class ZipScreenLoader implements IScreenLoader {
         int delimiterIndex = path.indexOf("!");
         String zipFilePath = path.substring(path.indexOf("/"), delimiterIndex);
         path = path.substring(0, path.indexOf("!/") + 2);
-        //String prefix = path.substring(path.indexOf("!/") + 2);
         try (JarFile jarFile = new JarFile(zipFilePath)) {
             for (Enumeration<JarEntry> em = jarFile.entries(); em.hasMoreElements();) {
                 JarEntry entry = em.nextElement();
