@@ -68,6 +68,7 @@ public final class ScreenPartManager {
         loader.setLocation(screenManager.getScreenUrl(name));
         loader.setResources(screenManager.getResources());
         loader.setControllerFactory(screenManager.getFactory());
+        loader.setBuilderFactory(screenManager.getBuilderFactory());
         try {
             final Node node = loader.load();
             container.getChildren().setAll(node);

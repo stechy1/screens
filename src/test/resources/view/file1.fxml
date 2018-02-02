@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
+<?import cz.stechy.screens.simple.widget.CustomWidget?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-
-<?import javafx.scene.control.ToggleButton?>
-<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.stechy.screens.simple.controller.Controller1">
-  <Button layoutX="269.0" layoutY="187.0" mnemonicParsing="false" onAction="#goTo2" styleClass="custom-button" text="Go to 2" />
-  <Button layoutX="269.0" layoutY="220.0" mnemonicParsing="false" onAction="#goTo3" text="Go to 3" />
-  <Button layoutX="269.0" layoutY="255.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-  <Button layoutX="269.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleFinish" text="Finish" />
-   <Button layoutX="346.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleNotify" text="Show test notification" />
-   <Button layoutX="140.0" layoutY="360.0" mnemonicParsing="false" text="Click me" />
-   <StackPane fx:id="partContainer" layoutX="14.0" layoutY="14.0" prefHeight="150.0" prefWidth="200.0" />
-   <ToggleButton layoutX="315.0" layoutY="53.0" mnemonicParsing="false" text="Toggle parts" fx:id="toggleButton"/>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
+<?import javafx.scene.layout.VBox?>
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+  xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="cz.stechy.screens.simple.controller.Controller1">
+  <Button layoutX="269.0" layoutY="187.0" mnemonicParsing="false" onAction="#goTo2"
+    styleClass="custom-button" text="Go to 2"/>
+  <Button layoutX="269.0" layoutY="220.0" mnemonicParsing="false" onAction="#goTo3" text="Go to 3"/>
+  <Button layoutX="269.0" layoutY="255.0" mnemonicParsing="false" onAction="#goBack" text="Back"/>
+  <Button layoutX="269.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleFinish"
+    text="Finish"/>
+  <Button layoutX="346.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleNotify"
+    text="Show test notification"/>
+  <Button layoutX="140.0" layoutY="360.0" mnemonicParsing="false" text="Click me"/>
+  <StackPane fx:id="partContainer" layoutX="14.0" layoutY="14.0" prefHeight="150.0"
+    prefWidth="200.0"/>
+  <ToggleButton fx:id="toggleButton" layoutX="315.0" layoutY="53.0" mnemonicParsing="false"
+    text="Toggle parts"/>
+  <VBox layoutX="64.0" layoutY="64.0" prefHeight="200.0" prefWidth="100.0"/>
+  <cursor>
+    <Cursor fx:constant="HAND"/>
+  </cursor>
 
 </Pane>

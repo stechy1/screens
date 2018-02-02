@@ -25,6 +25,7 @@ import cz.stechy.screens.animation.IScreenAnimator;
 import cz.stechy.screens.base.IMainScreen;
 import cz.stechy.screens.base.IScreenLoader;
 import cz.stechy.screens.base.IScreenManager;
+import cz.stechy.screens.base.WidgetBuilderProvider;
 import cz.stechy.screens.loader.SimpleScreenLoader;
 import cz.stechy.screens.loader.ZipScreenLoader;
 import java.io.IOException;
@@ -98,6 +99,8 @@ public final class ScreenManager implements IScreenManager {
     private ResourceBundle mResources;
     // Továrna kontrolerů
     private Callback<Class<?>, Object> mFactory;
+    // Továrna JavaFX nodů
+    private CustomWidgetBuilder mBuilderFactory = new CustomWidgetBuilder();
     // Screen transition
     private IScreenAnimator mAnimator;
     // Screen loader
@@ -130,6 +133,7 @@ public final class ScreenManager implements IScreenManager {
         this.mResources = parentManager.mResources;
         this.mAnimator = parentManager.mAnimator;
         this.mFactory = parentManager.mFactory;
+        this.mBuilderFactory = parentManager.mBuilderFactory;
         this.mScreenLoader = parentManager.mScreenLoader;
         try {
             loadScreens();
@@ -225,6 +229,7 @@ public final class ScreenManager implements IScreenManager {
         loader.setLocation(screenInfo.url);
         loader.setResources(mResources);
         loader.setControllerFactory(mFactory);
+        loader.setBuilderFactory(mBuilderFactory);
         Parent parent = loader.load();
         BaseController controller = loader.getController();
         controller.setScreenManager(this);
@@ -331,6 +336,24 @@ public final class ScreenManager implements IScreenManager {
         stage.show();
     }
 
+    /**
+     * Přidá stavitele widgetu
+     *
+     * @param widgetBuilderProvider {@link WidgetBuilderProvider}
+     */
+    public void addWidgetBuilderProvider(WidgetBuilderProvider widgetBuilderProvider) {
+        mBuilderFactory.addWidgetBuilderProvider(widgetBuilderProvider);
+    }
+
+    /**
+     * Odebere stavitele widgetu
+     *
+     * @param widgetBuilderProvider {@link WidgetBuilderProvider}
+     */
+    public void removeWidgetBuilderProvider(WidgetBuilderProvider widgetBuilderProvider) {
+        mBuilderFactory.removeWidgetBuilderProvider(widgetBuilderProvider);
+    }
+
     // endregion
 
     // region Setery a Gettery
@@ -376,6 +399,14 @@ public final class ScreenManager implements IScreenManager {
         onDialogShowHandler = handler;
     }
 
+    public Callback<Class<?>, Object> getFactory() {
+        return mFactory;
+    }
+
+    public CustomWidgetBuilder getBuilderFactory() {
+        return mBuilderFactory;
+    }
+
     /**
      * Nastaví továrnu na kontrolery
      *
@@ -383,10 +414,6 @@ public final class ScreenManager implements IScreenManager {
      */
     public void setControllerFactory(Callback<Class<?>, Object> factory) {
         this.mFactory = factory;
-    }
-
-    public Callback<Class<?>, Object> getFactory() {
-        return mFactory;
     }
 
     /**

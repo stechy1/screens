@@ -3,6 +3,7 @@ package cz.stechy.screens.simple;
 import cz.stechy.screens.ScreenManager;
 import cz.stechy.screens.ScreenManagerConfiguration;
 import cz.stechy.screens.base.IMainScreen;
+import cz.stechy.screens.simple.widget.builder.CustomWidgetBuilder;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,6 +48,7 @@ public class Example extends Application {
         parent.setStyle("-fx-background-color: transparent;");
         IMainScreen controlledScreen = loader.getController();
         //manager.setControllerFactory();
+        manager.addWidgetBuilderProvider(new CustomWidgetBuilder());
         manager.setMainScreen(controlledScreen);
         manager.addScreensToBlacklist("screen4", "screen7");
         manager.loadScreens();
