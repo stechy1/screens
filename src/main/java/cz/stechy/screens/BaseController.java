@@ -18,6 +18,7 @@ package cz.stechy.screens;
 
 import cz.stechy.screens.base.IControlledScreen;
 import cz.stechy.screens.base.IScreenManager;
+import java.util.Optional;
 import javafx.scene.Node;
 
 /**
@@ -345,6 +346,23 @@ public abstract class BaseController implements IControlledScreen {
      */
     protected void showNotification(Notification notification) {
         mManager.showNotification(notification);
+    }
+
+    /**
+     * Zobrazí čekací screen
+     *
+     * @param name Název čekacího screenu
+     * @return {@link Optional<BaseController>} Kontroler čekacího screenu
+     */
+    protected Optional<BaseController> showWaitingScreen(String name) {
+        return mManager.showWaitingScreen(name);
+    }
+
+    /**
+     * Zavře právě otevřený čekací screen
+     */
+    protected void hideWaitingScreen() {
+        mManager.hideWaitingScreen();
     }
 
     /**

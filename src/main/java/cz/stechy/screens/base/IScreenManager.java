@@ -16,9 +16,11 @@
 
 package cz.stechy.screens.base;
 
+import cz.stechy.screens.BaseController;
 import cz.stechy.screens.Bundle;
 import cz.stechy.screens.Notification;
 import cz.stechy.screens.ScreenPartManager;
+import java.util.Optional;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
@@ -115,6 +117,18 @@ public interface IScreenManager {
      * @param y Y-ová souřadnice popup dialogu
      */
     void showPopupForResult(final String name, final int actionId, final Bundle bundle, double x, double y);
+
+    /**
+     * Zobrazí čekací dialog přes celé okno
+     *
+     * @param name Název screenu s čekacím dialogem
+     */
+    Optional<BaseController> showWaitingScreen(final String name);
+
+    /**
+     * Odstraní čekací dialog
+     */
+    void hideWaitingScreen();
 
     /**
      * Zobrazí předchozí screen.

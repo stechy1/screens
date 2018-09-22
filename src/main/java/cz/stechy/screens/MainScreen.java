@@ -30,6 +30,30 @@ public class MainScreen implements IMainScreen {
     }
 
     @Override
+    public void addChildNode(Node node) {
+        AnchorPane.setTopAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(node, 10.0);
+        AnchorPane.setRightAnchor(node, 10.0);
+        AnchorPane.setBottomAnchor(node, 10.0);
+        container.getChildren().add(node);
+    }
+
+    @Override
+    public void removeChildNode(Node node) {
+        container.getChildren().remove(node);
+    }
+
+    @Override
+    public void disableScreen() {
+        container.getChildren().forEach(node -> node.setDisable(true));
+    }
+
+    @Override
+    public void enableScreen() {
+        container.getChildren().forEach(node -> node.setDisable(false));
+    }
+
+    @Override
     public Node getContainer() {
         return container;
     }

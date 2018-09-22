@@ -109,6 +109,8 @@ public final class ScreenManager implements IScreenManager {
     private IMainScreen mMainScreen;
     // Handler, který se zavolá po zobrazení dialogu
     private OnDialogShow onDialogShowHandler;
+    // Screen s čekacím dialogem
+    private ScreenInfo waitingScreen;
     // Šířka okna
     private double mWidth;
     // Výška okna
@@ -526,6 +528,38 @@ public final class ScreenManager implements IScreenManager {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public Optional<BaseController> showWaitingScreen(String name) {
+        if (waitingScreen != null) {
+            return Optional.empty();
+        }
+
+        final ScreenInfo screenInfo = mScreens.get(name);
+        assert screenInfo != null;
+        try {
+            loadScreen(screenInfo);
+            mMainScreen.disableScreen();
+            mMainScreen.addChildNode(screenInfo.node);
+            waitingScreen = screenInfo;
+            return Optional.of(screenInfo.controller);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public void hideWaitingScreen() {
+        if (waitingScreen == null) {
+            return;
+        }
+
+        mMainScreen.removeChildNode(waitingScreen.node);
+        mMainScreen.enableScreen();
+        waitingScreen = null;
     }
 
     @Override

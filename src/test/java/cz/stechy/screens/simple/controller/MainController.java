@@ -40,6 +40,26 @@ public class MainController implements Initializable, IMainScreen {
     }
 
     @Override
+    public void addChildNode(Node node) {
+
+    }
+
+    @Override
+    public void removeChildNode(Node node) {
+
+    }
+
+    @Override
+    public void disableScreen() {
+
+    }
+
+    @Override
+    public void enableScreen() {
+
+    }
+
+    @Override
     public Node getContainer() {
         return container;
     }

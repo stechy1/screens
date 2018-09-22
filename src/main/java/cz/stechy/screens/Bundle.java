@@ -22,6 +22,7 @@ import java.util.Map;
 /**
  * Třída pro předávání parametrů mezi screeny
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public final class Bundle {
 
     // Kolekce obsahující všechny parametry

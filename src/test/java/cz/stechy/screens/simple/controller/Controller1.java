@@ -5,6 +5,9 @@ import cz.stechy.screens.Bundle;
 import cz.stechy.screens.Notification;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
@@ -77,5 +80,10 @@ public class Controller1 extends BaseController implements Initializable {
     @Override
     protected void onClose() {
         System.out.println("On close");
+    }
+
+    public void handleShowWaitingDialog(ActionEvent actionEvent) {
+        showWaitingScreen("waiting");
+        Executors.newScheduledThreadPool(1).schedule(() -> Platform.runLater(this::hideWaitingScreen), 5, TimeUnit.SECONDS);
     }
 }

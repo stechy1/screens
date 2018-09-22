@@ -31,6 +31,24 @@ public interface IMainScreen {
     void setChildNode(Node node);
 
     /**
+     * Přidá dopředu nový node
+     *
+     * @param node Node, který se má přidat dopředu
+     */
+    void addChildNode(Node node);
+
+    /**
+     * Odebere vybraný node
+     *
+     * @param node Node, který se má odebrat
+     */
+    void removeChildNode(Node node);
+
+    void disableScreen();
+
+    void enableScreen();
+
+    /**
      * @return Vrátí {@link Node} který představuje kořenový prvek scény
      */
     Node getContainer();
